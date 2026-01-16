@@ -224,7 +224,7 @@ export default function KodyEthPreview() {
   const [workExpandFirst, setWorkExpandFirst] = useState(false);
 
   // placeholders; update later
-  const email = "kody@kody.eth";
+  const email = "kody.sale@gmail.com";
   const ens = "kody.eth";
 
   function showToast(msg) {
@@ -516,8 +516,6 @@ export default function KodyEthPreview() {
               >
                 kody.eth
               </a>
-              <span className="hidden sm:inline text-xs text-zinc-300/80">• decentralization maxi • ethereum infra / staking / ops</span>
-              <span className="sm:hidden text-xs text-zinc-300/80">decentralization maxi</span>
             </div>
 
             <nav className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-zinc-200/90">
@@ -540,7 +538,7 @@ export default function KodyEthPreview() {
                     title={`Press ${s.key.toUpperCase()}`}
                   >
                     <span className="font-mono">[{s.key.toUpperCase()}]</span>{" "}
-                    <span className={classNames(isActive ? "tracking-wide" : "")}>{isActive ? s.label.toUpperCase() : s.label}</span>
+                    <span className={classNames(isActive ? "tracking-wide" : "")}>{s.label}</span>
                   </a>
                 );
               })}
@@ -581,14 +579,13 @@ export default function KodyEthPreview() {
               <pre className="whitespace-pre-wrap font-mono text-[13px] leading-5 text-zinc-100">
 {`┌─ kody.eth ───────────────────────────────────────────────────────────────┐
 │ $ title                                                                    │
-│ > decentralization maxi (ethereum)                                          │
+│ > pragmatic eth maxi                                                        │
 │                                                                            │
 │ $ what_i_do                                                                 │
-│ > product marketing + growth ops for ethereum infrastructure                │
-│ > operator-first systems: docs, programs, GTM that ships                    │
+│ > I make complicated things sound simple and feel exciting                  │
 │                                                                            │
 │ $ focus                                                                     │
-│ > distributed validators • operator ecosystems • public goods               │
+│ > ethereum infrastructure • coordinatooooor • all things gtm                │
 │                                                                            │
 │ [ enter ] explore  ▸   [ w ] proof of work  ▸   [ c ] contact  ▸            │
 └────────────────────────────────────────────────────────────────────────────┘`}
@@ -632,31 +629,22 @@ export default function KodyEthPreview() {
             </div>
           </div>
 
-          <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-200/85">
-            Operator-first marketing and systems-building for Ethereum infrastructure. I care about decentralization,
-            credible neutrality, and making the staking/infrastructure layer actually usable.
-          </p>
         </section>
 
         {/* Sections */}
         <SectionBlock id="about" title="About" kicker="mission" setRef={(el) => (refs.current.about = el)}>
           <div className="space-y-4">
-            <p className="text-sm leading-6 text-zinc-200/85">
-              I work at the intersection of product marketing, growth ops, and hands-on operator experience — mostly
-              in Ethereum staking and infrastructure.
-            </p>
-
             <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
               <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
 {`/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\
-Ethereum alignment: decentralization • credible neutrality • operator UX
+I have been in Ethereum since 2017, and I have spent the last five years
+focused on staking infrastructure. I like learning the technical guts,
+translating them into plain English, and helping teams ship. I care about
+decentralization, permissionlessness, and building tools that help onboard
+the next billion people onchain. I try to bring a public-goods mindset to
+whatever I am working on.
 \\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/`}
               </pre>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              <BulletCard title="I optimize for" items={["clarity over hype", "systems that ship", "operator empathy", "public goods energy"]} />
-              <BulletCard title="Known for" items={["GTM + growth ops", "docs + flows", "community programs", "technical fluency"]} />
             </div>
           </div>
         </SectionBlock>
@@ -673,82 +661,175 @@ Ethereum alignment: decentralization • credible neutrality • operator UX
 
             <ImpactCard
               title="Smoothly (Founder)"
-              subtitle="Ethereum staking product — execution-layer reward pooling"
-              impact={["protocol + ops", "community + grants", "docs + education"]}
-              proofs={["Docs (placeholder)", "Writeups (placeholder)", "Talks (placeholder)"]}
+              subtitle="Tool for Ethereum stakers to pool execution-layer rewards"
+              impact={[
+                "grew from 0 to 15M TVL with guerilla marketing",
+                "distributed 150K+ in donations to solo stakers",
+                "bootstrapped + EF grant + 2 devs shipped an open-source public good",
+                "learned: if you build it, they will come",
+              ]}
+              proofs={[
+                "Site: https://smoothly.money",
+                "Docs: https://docs.smoothly.money/",
+                "GitHub org: https://github.com/Smoothly-Protocol",
+                "Coverage: https://www.poap.news/mar-19-2024/",
+              ]}
             />
           </div>
         </SectionBlock>
 
         <SectionBlock id="writing" title="Writing" kicker="ideas" setRef={(el) => (refs.current.writing = el)}>
-          <ListPanel
-            items={[
-              "2026 • Operator ecosystems: what scales and what breaks",
-              "2025 • Why distributed validators matter for credible neutrality",
-              "2025 • The operator UX gap: docs, flows, and support systems",
-              "2024 • Building for solo stakers: incentives without tokens",
-            ]}
-          />
+          <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
+            <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
+{`┌───────────────────────────────────────────────────────────────┐
+│ x402: writing pool empty                                      │
+│ deposit ideas to initialize                                   │
+│                                                               │
+│ status: empty block                                           │
+└───────────────────────────────────────────────────────────────┘`}
+            </pre>
+          </div>
         </SectionBlock>
 
         <SectionBlock id="talks" title="Talks" kicker="signal" setRef={(el) => (refs.current.talks = el)}>
-          <ListPanel items={["Talk • Distributed validators and operator UX (placeholder)", "Panel • Ethereum alignment and decentralization (placeholder)"]} />
+          <div className="space-y-3">
+            <p className="text-sm leading-6 text-zinc-200/85">A few places I’ve had the chance to share what I’m learning.</p>
+            <ListPanel
+              items={[
+                {
+                  title: "Correlated Failures and Network Impact",
+                  meta: "EthStaker / Staking Gathering",
+                  href: "https://www.youtube.com/watch?v=rE0w_Ta_5U8&t=4s",
+                },
+                {
+                  title: "Smoothing Pools Comparison",
+                  meta: "Smoothly v. Smooth",
+                  href: "https://www.youtube.com/watch?v=dB5csfO8I0E&t=68s",
+                },
+                {
+                  title: "Anthony and Kody — Obol",
+                  meta: "The Weekly Doots",
+                  href: "https://www.youtube.com/watch?v=e4PpACNWj34&list=PLXv3rooahaDSo-zK7so_hz9cG4pmCZVEe&index=7",
+                },
+                {
+                  title: "Obol — The Staking Endgame",
+                  meta: "Conference talk",
+                  href: "https://www.youtube.com/watch?v=C58S5H3-7U4",
+                },
+                {
+                  title: "Aztec x Obol — The Future of Node Operators",
+                  meta: "Panel",
+                  href: "https://www.youtube.com/watch?v=zJAoR9CKLVg",
+                },
+              ]}
+            />
+          </div>
         </SectionBlock>
 
         <SectionBlock id="projects" title="Projects" kicker="threads" setRef={(el) => (refs.current.projects = el)}>
-          <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
-            <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
-{`Choose a thread:
-(1) Operator Experience
-(2) Distributed Validators
-(3) GTM Systems
-(4) Open-source & Public Goods`}
-            </pre>
+          <div className="space-y-3">
+            <p className="text-sm leading-6 text-zinc-200/85">
+              A small selection — the stuff I’m most proud of, or currently obsessed with.
+            </p>
           </div>
 
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <MiniCard title="Shipping" desc="Operator programs + launch systems (placeholder)" />
-            <MiniCard title="Public goods" desc="Decentralization-first work (placeholder)" />
-            <MiniCard title="Experiments" desc="Infra + tooling curiosity (placeholder)" />
-            <MiniCard title="Talk tracks" desc="Narratives + workshops (placeholder)" />
+            <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
+              <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
+{`┌─ Shipping ────────────────────────────────────────────────────┐
+│ Obol TVL Growth  →  https://defillama.com/protocol/obol         │
+│ Smoothly Growth  →  https://dune.com/0xRob/smoothly             │
+│ GTM: Obol Stack  →  https://github.com/ObolNetwork/obol-stack   │
+└───────────────────────────────────────────────────────────────┘`}
+              </pre>
+              <div className="mt-3 flex flex-wrap gap-2 text-xs text-zinc-300/80">
+                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://defillama.com/protocol/obol" target="_blank" rel="noreferrer">Obol TVL</a>
+                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://dune.com/0xRob/smoothly" target="_blank" rel="noreferrer">Smoothly Growth</a>
+                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://github.com/ObolNetwork/obol-stack" target="_blank" rel="noreferrer">Obol Stack</a>
+              </div>
+            </div>
+            <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
+              <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
+{`┌─ Public Goods ────────────────────────────────────────────────┐
+│ ENS + IPFS personal site (this one)                            │
+│ Solo staking incentives → https://docs.smoothly.money/         │
+│ POAP recap             → https://www.poap.news/mar-19-2024/     │
+└───────────────────────────────────────────────────────────────┘`}
+              </pre>
+              <div className="mt-3 flex flex-wrap gap-2 text-xs text-zinc-300/80">
+                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://docs.smoothly.money/" target="_blank" rel="noreferrer">Solo staking incentives</a>
+                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://www.poap.news/mar-19-2024/" target="_blank" rel="noreferrer">POAP recap</a>
+              </div>
+            </div>
+            <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
+              <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
+{`┌─ Experiments ─────────────────────────────────────────────────┐
+│ ASCII UI + keyboard-first interactions                          │
+│ https://github.com/ksale001/braille-buddy                        │
+└───────────────────────────────────────────────────────────────┘`}
+              </pre>
+              <div className="mt-3 flex flex-wrap gap-2 text-xs text-zinc-300/80">
+                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://github.com/ksale001/braille-buddy" target="_blank" rel="noreferrer">braille-buddy</a>
+              </div>
+            </div>
           </div>
         </SectionBlock>
 
         <SectionBlock id="contact" title="Contact" kicker="reach" setRef={(el) => (refs.current.contact = el)}>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
-              <div className="text-sm text-zinc-200/85">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-zinc-300/80">email</span>
-                  <button
-                    onClick={() => copy(email, "email")}
-                    className="rounded-xl border border-zinc-800/60 bg-zinc-900/35 px-2 py-1 font-mono text-xs hover:bg-zinc-900/55 focus:outline-none focus:ring-2 focus:ring-zinc-200/30"
-                  >
-                    copy
-                  </button>
-                </div>
+          <div className="space-y-3">
+            <p className="text-sm leading-6 text-zinc-200/85">
+              Always happy to chat with like minded people. HMU if you want to talk Ethereum validator infra.
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
+                <div className="text-sm text-zinc-200/85">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs text-zinc-300/80">email</span>
+                    <button
+                      onClick={() => copy(email, "email")}
+                      className="rounded-xl border border-zinc-800/60 bg-zinc-900/35 px-2 py-1 font-mono text-xs hover:bg-zinc-900/55 focus:outline-none focus:ring-2 focus:ring-zinc-200/30"
+                    >
+                      copy
+                    </button>
+                  </div>
 
-                <div className="mt-2 font-mono text-sm">{email}</div>
+                  <div className="mt-2 font-mono text-sm">{email}</div>
 
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <a className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-sm hover:bg-zinc-900/55" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-                  <a className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-sm hover:bg-zinc-900/55" href="https://x.com/" target="_blank" rel="noreferrer">X</a>
-                  <a className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-sm hover:bg-zinc-900/55" href="https://warpcast.com/" target="_blank" rel="noreferrer">Farcaster</a>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <a className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-sm hover:bg-zinc-900/55" href="https://farcaster.xyz/kody.eth" target="_blank" rel="noreferrer">Farcaster</a>
+                    <a className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-sm hover:bg-zinc-900/55" href="https://www.linkedin.com/in/kody-sale-6191b621/" target="_blank" rel="noreferrer">LinkedIn</a>
+                    <a className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-sm hover:bg-zinc-900/55" href="https://github.com/ksale001" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
+
+                  <div className="mt-4 text-xs text-zinc-300/70">
+                    Telegram: <span className="font-mono">@kodysale</span>
+                  </div>
+
+                  <div className="mt-3 text-xs text-zinc-300/70">
+                    Dev links:{" "}
+                    <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://github.com/Smoothly-Protocol" target="_blank" rel="noreferrer">
+                      Smoothly org
+                    </a>
+                    {" • "}
+                    <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://github.com/ObolNetwork" target="_blank" rel="noreferrer">
+                      Obol org
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
-              <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
+              <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
+                <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
 {`┌───────────────────────────────────────────────────────────────┐
-│ If you're building Ethereum infra and want crisp GTM + systems  │
-│ that actually ship, let's talk.                                │
+│ Building Ethereum infra? Want crisp GTM + systems that ship?   │
+│ Let’s talk.                                                    │
 │                                                               │
 │ email: ${(email || "").padEnd(45, " ")}│
 └───────────────────────────────────────────────────────────────┘`}
-              </pre>
-              <div className="mt-3 text-xs text-zinc-300/75">
-                ENS: <span className="font-mono">{ens}</span> • Hosted on IPFS (later) • No tracking
+                </pre>
+                <div className="mt-3 text-xs text-zinc-300/75">
+                  ENS: <span className="font-mono">{ens}</span> • Hosted on IPFS (later) • No tracking
+                </div>
               </div>
             </div>
           </div>
@@ -894,7 +975,27 @@ function ImpactCard({ title, subtitle, impact, proofs, open }) {
         <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 p-3">
           <div className="font-mono text-xs text-zinc-400/80">proof</div>
           <ul className="mt-2 space-y-1 text-sm text-zinc-200/85">
-            {proofs.map((x) => (<li key={x} className="underline decoration-zinc-500/50 underline-offset-4">{x}</li>))}
+            {proofs.map((x, index) => {
+              const match = typeof x === "string" ? x.match(/^(.*?):\s*(https?:\/\/\S+)/) : null;
+              const label = match?.[1]?.trim();
+              const href = match?.[2];
+              return (
+                <li key={`${x}-${index}`}>
+                  {href ? (
+                    <a
+                      className="underline decoration-zinc-500/50 underline-offset-4 hover:text-zinc-100"
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {label || href}
+                    </a>
+                  ) : (
+                    <span className="text-zinc-200/85">{x}</span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
@@ -915,9 +1016,36 @@ function ListPanel({ items }) {
   return (
     <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
       <div className="space-y-2">
-        {items.map((x) => (
-          <div key={x} className="rounded-2xl border border-zinc-800/60 bg-zinc-950/35 px-3 py-2 text-sm text-zinc-200/85">{x}</div>
-        ))}
+        {items.map((item, index) => {
+          if (typeof item === "string") {
+            return (
+              <div
+                key={`${item}-${index}`}
+                className="rounded-2xl border border-zinc-800/60 bg-zinc-950/35 px-3 py-2 text-sm text-zinc-200/85"
+              >
+                {item}
+              </div>
+            );
+          }
+
+          return (
+            <a
+              key={`${item.title}-${index}`}
+              className="group rounded-2xl border border-zinc-800/60 bg-zinc-950/35 px-3 py-2 text-sm text-zinc-200/85 transition hover:border-zinc-700/80 hover:bg-zinc-900/40"
+              href={item.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <div className="text-sm text-zinc-100">{item.title}</div>
+                  {item.meta ? <div className="mt-1 text-xs text-zinc-400/80">{item.meta}</div> : null}
+                </div>
+                <span className="font-mono text-[11px] text-zinc-500/80 group-hover:text-zinc-300/80">open</span>
+              </div>
+            </a>
+          );
+        })}
       </div>
     </div>
   );
