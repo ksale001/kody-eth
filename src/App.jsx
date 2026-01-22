@@ -577,17 +577,17 @@ export default function KodyEthPreview() {
           <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/55 p-5 shadow-xl backdrop-blur">
             <div className="flex flex-col gap-4">
               <pre className="whitespace-pre-wrap font-mono text-[13px] leading-5 text-zinc-100">
-{`┌─ kody.eth ───────────────────────────────────────────────────────────────┐
-│ $ title                                                                    │
-│ > pragmatic eth maxi                                                        │
+{`┌────────────────────────────────────────────────────────────────────────────┐
+│ $ who_i_am                                                                 │
+│ > pragmatic eth maxi                                                       │
 │                                                                            │
-│ $ what_i_do                                                                 │
-│ > I make complicated things sound simple and feel exciting                  │
+│ $ what_i_do                                                                │
+│ > I make complicated things sound simple and feel exciting                 │
 │                                                                            │
-│ $ focus                                                                     │
-│ > ethereum infrastructure • coordinatooooor • all things gtm                │
+│ $ focus                                                                    │
+│ > ethereum infrastructure • coordinatooooor • all things gtm               │
 │                                                                            │
-│ [ enter ] explore  ▸   [ w ] proof of work  ▸   [ c ] contact  ▸            │
+│ [ enter ] explore  ▸   [ w ] proof of work  ▸   [ c ] contact  ▸           │
 └────────────────────────────────────────────────────────────────────────────┘`}
               </pre>
 
