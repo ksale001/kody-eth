@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
  * - Tailwind classes (no imports needed)
  * - ASCII background layers sourced from merge.txt (embedded as base64)
  * - Sticky header + scroll-spy
- * - Keyboard shortcuts: A/W/R/T/P/C, ?, /, Esc, Enter
+ * - Keyboard shortcuts: A/H/W/R/T/P/C, ?, /, Esc, Enter
  * - Command palette + help overlay + copy-to-clipboard toast
  *
  * Why base64?
@@ -15,6 +15,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const SECTIONS = [
   { key: "a", id: "about", label: "About" },
+  { key: "h", id: "journey", label: "How I Got Here" },
   { key: "w", id: "work", label: "Work" },
   { key: "r", id: "writing", label: "Writing" },
   { key: "t", id: "talks", label: "Talks" },
@@ -104,6 +105,30 @@ const BG_CONFIG = { wavesIndex: 1, mainIndex: 0, zebraIndex: 2 };
 const BG_WAVES = ((ASCII_BLOCKS[BG_CONFIG.wavesIndex] || ASCII_BLOCKS[0] || "") + "\n\n" + (ASCII_BLOCKS[BG_CONFIG.wavesIndex] || ASCII_BLOCKS[0] || "")).trimEnd();
 const BG_MAIN = (ASCII_BLOCKS[BG_CONFIG.mainIndex] || ASCII_BLOCKS[0] || "").trimEnd();
 const BG_ZEBRA = (ASCII_BLOCKS[BG_CONFIG.zebraIndex] || "").trimEnd();
+
+const HOW_I_GOT_HERE_PARAS = [
+  "Since this is a decentralized site, I feel the need to share how I ended up here. Long before Ethereum, I was interested in using things that felt different from the normal internet. Usenet was definitely the foundation, then came the MP3-sharing era: Napster, BearShare, and every other app that popped up trying to fill the gap. It was a little sketchy, but honestly kind of magical. Looking back, it laid the groundwork for the decentralization principles I feel attached to within crypto.",
+  "The moment that pulled me down the rabbit hole a little further, though, wasn’t file sharing. It was an application I downloaded on PS3 called Folding@home. Folding@home is a distributed computing application where you donate spare compute power to run protein-folding simulations that help researchers study diseases that would otherwise be too expensive or too slow to model. Back then, the idea that a bunch of regular people, kids, really, could contribute to something powerful enough to push science forward felt very profound.",
+  <>
+    Digging into decentralized compute led me to Bitcoin, which happened to be during the Silk Road era. Seeing people transact in something other than dollars gave me the same feeling I had with Folding@home, it felt new, it felt weird, it felt like{" "}
+    <a
+      href="https://youtu.be/sZHCVyllnck?si=e_uyDzLGnYIw1x_0"
+      target="_blank"
+      rel="noreferrer"
+      className="underline decoration-zinc-500/70 underline-offset-2 hover:text-zinc-100"
+    >
+      i like money
+    </a>
+    . Bitcoin was (and is) an incredible invention, and I’ll always have a special place in my heart for it. But today, it’s largely a store of value, plain and simple.
+  </>,
+  "I found Ethereum in 2017 during the ICO boom, and that was my latest *aha* moment. Ethereum was more than just money, it was home to a programming language, smart contracts, art, ICOs and tokens. It was a net new ecosystem, one that anyone could connect to from their computer. I’m convinced we’ll look back on this era and realize how much the world changed because of it.",
+  "On the builder front, I stayed mostly sidelined until the beacon chain launch. Proof of Stake was a paradigm shift. The design space was suddenly wide open. LSDs (which eventually became “LSTs” for whatever reason 😉) started to take off. Decentralized staking pools like Rocket Pool gained traction. Staking just grabbed my mindshare. That obsession led me to a simple question: how can solo stakers remain competitive when staking matures? My answer at the time (although slightly naive) was to pool together MEV rewards and create new incentives through public goods funding.",
+  "The EF was supportive of this effort and helped fund R&D. Decentralization was sexy back then and the solo staking community was strong (likely because we accounted for a large share of the actual independent node operators). I put the product on paper, found a rockstar full stack developer, and partnered with Anthony Sassano, EthStaker, Aestus Relay, and Yorrick (king of eth-docker) to help run the decentralized infrastructure. We launched smoothly.money as an open-source public good which grew to ~$20M in TVL and outperformed on APY thanks to the donations that poured in from the ecosystem!",
+  "Somewhere along the way, “incentivize solo staking” became a meme.",
+  "Around that time, I saw Obol publish an initiative called “1% for decentralization,” where a portion of rewards from stake run on Obol Distributed Validators gets redistributed back to the community to fund projects that strengthen Ethereum’s decentralization. That hit me hard. While building Smoothly, that kind of funding would have been massively valuable. I joined Obol shortly after.",
+  "Now, almost two years later, I lead product marketing at Obol, and I’m more excited than ever to be working in the Ethereum ecosystem. Today, it feels like we’re standing at another inflection point. Just like the shift from Proof of Work to Proof of Stake opened a new frontier, the move toward ZK feels like another era where the design space is wide open again.",
+  "And that’s the thing I love most about Ethereum: we never stop pushing forward. The ecosystem rewards curiosity. Anyone can show up with a real idea, post it on ethresearch or ethmagicians, and get thoughtful feedback. Ethereum is open to anyone who wants to contribute and that gives me a sense of purpose I never felt in my tradjob days.",
+];
 
 // ---------------------------
 // Minimal self-tests (dev)
@@ -206,6 +231,7 @@ export default function KodyEthPreview() {
 
   const refs = useRef({
     about: null,
+    journey: null,
     work: null,
     writing: null,
     talks: null,
@@ -224,7 +250,7 @@ export default function KodyEthPreview() {
   const [workExpandFirst, setWorkExpandFirst] = useState(false);
 
   // placeholders; update later
-  const email = "kody.sale@gmail.com";
+  const email = "kody.eth@proton.me";
   const ens = "kody.eth";
 
   function showToast(msg) {
@@ -551,7 +577,7 @@ export default function KodyEthPreview() {
                 className="rounded-xl border border-zinc-800/60 bg-zinc-900/40 px-2 py-1 font-mono text-xs text-zinc-100 hover:bg-zinc-900/65 focus:outline-none focus:ring-2 focus:ring-zinc-200/30"
                 title="Help (?)"
               >
-                [?]
+                [?] help
               </button>
 
               <button
@@ -563,7 +589,7 @@ export default function KodyEthPreview() {
                 className="rounded-xl border border-zinc-800/60 bg-zinc-900/40 px-2 py-1 font-mono text-xs text-zinc-100 hover:bg-zinc-900/65 focus:outline-none focus:ring-2 focus:ring-zinc-200/30"
                 title="Command palette (/)"
               >
-                /
+                / command
               </button>
             </nav>
           </div>
@@ -578,45 +604,14 @@ export default function KodyEthPreview() {
             <div className="flex flex-col gap-4">
               <pre className="whitespace-pre-wrap font-mono text-[13px] leading-5 text-zinc-100">
 {`┌────────────────────────────────────────────────────────────────────────────┐
-│ $ who_i_am                                                                 │
-│ > pragmatic eth maxi                                                       │
-│                                                                            │
-│ $ what_i_do                                                                │
-│ > I make complicated things sound simple and feel exciting                 │
-│                                                                            │
-│ $ focus                                                                    │
-│ > ethereum infrastructure • coordinatooooor • all things gtm               │
-│                                                                            │
-│ [ enter ] explore  ▸   [ w ] proof of work  ▸   [ c ] contact  ▸           │
+│ $ What_is_this                                                             │
+│ > Welcome to kody.eth.limo (-) here you’ll find my work, my writing, my     │
+│ > hobbies, and a little internet trail of things worth sharing.            │
 └────────────────────────────────────────────────────────────────────────────┘`}
               </pre>
 
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => scrollTo("about")}
-                  className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-sm text-zinc-100 hover:bg-zinc-900/55 focus:outline-none focus:ring-2 focus:ring-zinc-200/30"
-                >
-                  Explore
-                </button>
-
-                <button
-                  onClick={() => {
-                    setWorkExpandFirst(true);
-                    scrollTo("work");
-                  }}
-                  className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-sm text-zinc-100 hover:bg-zinc-900/55 focus:outline-none focus:ring-2 focus:ring-zinc-200/30"
-                >
-                  Proof of work
-                </button>
-
-                <button
-                  onClick={() => scrollTo("contact")}
-                  className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-sm text-zinc-100 hover:bg-zinc-900/55 focus:outline-none focus:ring-2 focus:ring-zinc-200/30"
-                >
-                  Contact
-                </button>
-
-                <div className="ml-auto flex items-center gap-2 text-xs text-zinc-300/80">
+              <div className="flex justify-end">
+                <div className="flex items-center gap-2 text-xs text-zinc-300/80">
                   <span className="font-mono">ENS:</span>
                   <button
                     onClick={() => copy(ens, "ens")}
@@ -637,14 +632,37 @@ export default function KodyEthPreview() {
             <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
               <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
 {`/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\
-I have been in Ethereum since 2017, and I have spent the last five years
-focused on staking infrastructure. I like learning the technical guts,
-translating them into plain English, and helping teams ship. I care about
-decentralization, permissionlessness, and building tools that help onboard
-the next billion people onchain. I try to bring a public-goods mindset to
-whatever I am working on.
+I’m a dad of two, coffee lover, car guy, and ETH maxi. I’m here to see
+Ethereum win without sacrificing its values. Constantly learning,
+teaching, or building; raising kids who’ll figure out why the answer is 42.
 \\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/`}
               </pre>
+            </div>
+          </div>
+        </SectionBlock>
+
+        <SectionBlock id="journey" title="How I Got Here" kicker="origin" setRef={(el) => (refs.current.journey = el)}>
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
+              <div className="space-y-3 text-sm leading-6 text-zinc-200/85">
+                <p>{HOW_I_GOT_HERE_PARAS[0]}</p>
+                <details className="group rounded-2xl border border-zinc-800/60 bg-zinc-950/40 p-3">
+                  <summary className="cursor-pointer list-none select-none">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="font-mono text-xs text-zinc-400/80">context</div>
+                      <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/30 px-2 py-1 font-mono text-xs text-zinc-200/80">
+                        <span className="group-open:hidden">read more</span>
+                        <span className="hidden group-open:inline">collapse</span>
+                      </div>
+                    </div>
+                  </summary>
+                  <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
+                    {HOW_I_GOT_HERE_PARAS.slice(1).map((para, index) => (
+                      <p key={`journey-${index}`}>{para}</p>
+                    ))}
+                  </div>
+                </details>
+              </div>
             </div>
           </div>
         </SectionBlock>
@@ -780,7 +798,7 @@ whatever I am working on.
             <p className="text-sm leading-6 text-zinc-200/85">
               Always happy to chat with like minded people. HMU if you want to talk Ethereum validator infra.
             </p>
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-3">
               <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
                 <div className="text-sm text-zinc-200/85">
                   <div className="flex items-center justify-between">
@@ -818,29 +836,15 @@ whatever I am working on.
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
-                <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
-{`┌───────────────────────────────────────────────────────────────┐
-│ Building Ethereum infra? Want crisp GTM + systems that ship?   │
-│ Let’s talk.                                                    │
-│                                                               │
-│ email: ${(email || "").padEnd(45, " ")}│
-└───────────────────────────────────────────────────────────────┘`}
-                </pre>
-                <div className="mt-3 text-xs text-zinc-300/75">
-                  ENS: <span className="font-mono">{ens}</span> • Hosted on IPFS (later) • No tracking
-                </div>
-              </div>
             </div>
           </div>
         </SectionBlock>
 
         <footer className="mt-16 flex flex-col items-start justify-between gap-3 border-t border-zinc-800/60 pt-6 text-xs text-zinc-300/70 sm:flex-row">
-          <div className="font-mono">{ens} • preview UI</div>
+          <div className="font-mono">{ens} • hosted on IPFS</div>
           <div className="flex flex-wrap gap-2">
-            <button onClick={() => copy(ens, "ens")} className="rounded-xl border border-zinc-800/60 bg-zinc-900/35 px-2 py-1 font-mono hover:bg-zinc-900/55">copy ens</button>
-            <button onClick={() => setPaletteOpen(true)} className="rounded-xl border border-zinc-800/60 bg-zinc-900/35 px-2 py-1 font-mono hover:bg-zinc-900/55">/</button>
-            <button onClick={() => setHelpOpen(true)} className="rounded-xl border border-zinc-800/60 bg-zinc-900/35 px-2 py-1 font-mono hover:bg-zinc-900/55">?</button>
+            <button onClick={() => setPaletteOpen(true)} className="rounded-xl border border-zinc-800/60 bg-zinc-900/35 px-2 py-1 font-mono hover:bg-zinc-900/55">/ command</button>
+            <button onClick={() => setHelpOpen(true)} className="rounded-xl border border-zinc-800/60 bg-zinc-900/35 px-2 py-1 font-mono hover:bg-zinc-900/55">? help</button>
           </div>
         </footer>
       </main>
@@ -853,7 +857,7 @@ whatever I am working on.
 {`┌─ help ───────────────────────────────┐
 │ Keyboard-first site. No tracking.     │
 │                                      │
-│ navigate:  A W R T P C                │
+│ navigate:  A H W R T P C              │
 │ command:   /                          │
 │ close:     esc                        │
 └───────────────────────────────────────┘`}
@@ -915,7 +919,7 @@ whatever I am working on.
             <div className="mt-3">
               <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/70">
 {`┌─ tips ─────────────────────────────────────────┐
-│ try:  work • writing • open github • copy ens   │
+│ try:  journey • work • writing • copy ens       │
 └─────────────────────────────────────────────────┘`}
               </pre>
             </div>
