@@ -793,6 +793,33 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
           </div>
         </SectionBlock>
 
+        <SectionBlock id="ecosystem" title="Ecosystem" kicker="signals" setRef={(el) => (refs.current.ecosystem = el)}>
+          <div className="space-y-3">
+            <p className="text-sm leading-6 text-zinc-200/85">
+              Favorite places to track what is happening across the Ethereum ecosystem.
+            </p>
+            <ListPanel
+              columns={3}
+              items={[
+                { title: "Payload data", meta: "payload.de", href: "https://payload.de/data/" },
+                { title: "KiwiStand news", meta: "news.kiwistand.com", href: "https://news.kiwistand.com/" },
+                { title: "EthPandaOps live", meta: "lab.ethpandaops.io", href: "https://lab.ethpandaops.io/ethereum/live" },
+                { title: "8004scan", meta: "8004scan.io", href: "https://www.8004scan.io/" },
+                { title: "Lean roadmap", meta: "leanroadmap.org", href: "https://leanroadmap.org/" },
+                { title: "ETH proofs", meta: "ethproofs.org", href: "https://ethproofs.org/" },
+                { title: "Rollup.wtf", meta: "rollup.wtf", href: "https://rollup.wtf/" },
+                { title: "x402scan", meta: "x402scan.com", href: "https://www.x402scan.com/" },
+                { title: "Raises (DeFiLlama)", meta: "defillama.com", href: "https://defillama.com/raises" },
+                { title: "Pectrified mainnet", meta: "pectrified.com", href: "https://pectrified.com/mainnet" },
+                { title: "EthVal", meta: "ethval.com", href: "https://ethval.com/" },
+                { title: "Bids.pics", meta: "bids.pics", href: "https://bids.pics/" },
+                { title: "Forkcast", meta: "forkcast.org", href: "https://forkcast.org/" },
+                { title: "RWA.xyz", meta: "app.rwa.xyz", href: "https://app.rwa.xyz/" },
+              ]}
+            />
+          </div>
+        </SectionBlock>
+
         <SectionBlock id="contact" title="Contact" kicker="reach" setRef={(el) => (refs.current.contact = el)}>
           <div className="space-y-3">
             <p className="text-sm leading-6 text-zinc-200/85">
@@ -1016,10 +1043,16 @@ function BulletCard({ title, items }) {
   );
 }
 
-function ListPanel({ items }) {
+function ListPanel({ items, columns = 1 }) {
+  const layoutClassName =
+    columns === 3
+      ? "grid gap-2 sm:grid-cols-2 lg:grid-cols-3"
+      : columns === 2
+        ? "grid gap-2 sm:grid-cols-2"
+        : "space-y-2";
   return (
     <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
-      <div className="space-y-2">
+      <div className={layoutClassName}>
         {items.map((item, index) => {
           if (typeof item === "string") {
             return (
