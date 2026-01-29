@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>kody.eth ASCII (+/-) — falling + build</title>
+
+  <style>
+    :root {
+      --bg: #000;
+      --cell: 12px;            /* visual height of each ASCII character cell */
+      --minus-opacity: 0.10;   /* how visible the background '-' field is */
+      --g1: #ffffff;
+      --g2: #a7e2d0;
+      --g3: #2fe4ab;
+    }
+
+    @font-face {
+      font-family: "DM Sans Local";
+      src: url("./DMSans-VariableFont_opsz,wght.ttf") format("truetype-variations");
+      font-weight: 100 1000;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--bg);
+      overflow: auto;
+    }
+
+    .stage {
+      min-height: calc(100% - 48px);
+      display: grid;
+      place-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stack {
+      display: grid;
+    }
+
+    pre.ascii {
+      grid-area: 1 / 1;
+      margin: 0;
+      white-space: pre;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: var(--cell);
+      line-height: var(--cell);
+      letter-spacing: 0;
+      user-select: none;
+      transform: translateZ(0);
+    }
+
+    pre.ascii--minus {
+      color: rgba(255, 255, 255, var(--minus-opacity));
+      pointer-events: none;
+    }
+
+    pre.ascii--plus {
+      background: linear-gradient(90deg, var(--g1) 0%, var(--g2) 50%, var(--g3) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      user-select: all;
+    }
+
+    /* Source rasterization canvas stays hidden */
+    canvas#src { display: none; }
+
+    /* Fullscreen FX canvas for the falling '+' animation */
+    canvas#fx {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 10;
+      display: none;
+    }
+
+    /* While animating: hide the static PRE text but keep layout for accurate landing targets */
+    body[data-mode="anim"] pre.ascii {
+      opacity: 0;
+    }
+
+    body[data-mode="anim"] canvas#fx {
+      display: block;
+    }
+
+    .note {
+      position: fixed;
+      left: 16px;
+      bottom: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.55);
+      user-select: none;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .err {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      max-width: min(560px, calc(100vw - 32px));
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.7);
+      color: rgba(255,255,255,0.85);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      display: none;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body data-mode="anim">
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <div class="stage">
+    <div class="stack" id="stack">
+      <pre id="minus" class="ascii ascii--minus" aria-hidden="true"></pre>
+      <pre id="plus" class="ascii ascii--plus" aria-label="kody.eth ASCII art"></pre>
+    </div>
+    <canvas id="src" aria-hidden="true"></canvas>
+  </div>
+
+  <div class="note" aria-hidden="true">
+    DM Sans → ASCII. Press <b>K</b> to replay. Tweak SAMPLE_X/SAMPLE_Y for spacing.
+  </div>
+
+  <div id="err" class="err" role="status" aria-live="polite"></div>
+
+  <script>
+    (async () => {
+      // === Configuration ===
+      const TEXT = "kody.eth";
+
+      // Source letterform (what we're converting to ASCII)
+      const SOURCE_FONT_FAMILY = '"DM Sans Local", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+      const SOURCE_FONT_WEIGHT = 700;
+      const SOURCE_FONT_SIZE = 320; // px (larger source => better curves at low density)
+
+      // IMPORTANT: monospace characters are narrower than they are tall.
+      // To preserve DM Sans proportions, sample fewer pixels per column than per row.
+      // Larger values => fewer characters => less dense.
+      const SAMPLE_X = 3;
+      const SAMPLE_Y = 5;
+
+      // Threshold for whether a cell becomes '+' (foreground) or '-' (background)
+      const THRESH = 68; // raise => thinner; lower => thicker
+
+      // Extra padding around the rendered text on the canvas
+      const PADDING = 48; // px
+
+      // === Build animation knobs ===
+      const ANIM = {
+        // Bottom-up feel (bigger = stronger bottom-first). Units: ms.
+        ROW_DELAY_MS: 35,
+        ROW_JITTER_MS: 280,
+
+        // Physics
+        GRAVITY: 5200,     // px/s^2
+        V0_MIN: 2200,      // px/s
+        V0_JITTER: 900,    // px/s
+        V0_DEPTH_BOOST: 1200, // px/s (extra speed for lower rows)
+
+        // Spawn control
+        MAX_SPAWNS_PER_FRAME: 120,
+
+        // Finish
+        FADE_TO_STATIC_MS: 120,
+      };
+
+      // Avoid escaped newlines in source (prevents accidental invalid tokens)
+      const NL = String.fromCharCode(10);
+
+      // === Helpers ===
+      function showError(msg) {
+        const el = document.getElementById("err");
+        el.style.display = "block";
+        el.textContent = msg;
+      }
+
+      function assert(cond, message) {
+        if (!cond) throw new Error("TEST FAILED: " + message);
+      }
+
+      const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+      async function ensureSourceFontLoaded() {
+        if (!document.fonts || !document.fonts.load) return;
+        const spec = `${SOURCE_FONT_WEIGHT} ${SOURCE_FONT_SIZE}px "DM Sans"`;
+        try {
+          await Promise.race([document.fonts.load(spec, TEXT), sleep(2500)]);
+          await Promise.race([document.fonts.ready, sleep(2500)]);
+        } catch {
+          // Best effort.
+        }
+      }
+
+      function drawTextToCanvas(ctx, canvas) {
+        ctx.font = `${SOURCE_FONT_WEIGHT} ${SOURCE_FONT_SIZE}px ${SOURCE_FONT_FAMILY}`;
+        const m = ctx.measureText(TEXT);
+
+        const ascent = Math.ceil(m.actualBoundingBoxAscent || SOURCE_FONT_SIZE * 0.8);
+        const descent = Math.ceil(m.actualBoundingBoxDescent || SOURCE_FONT_SIZE * 0.2);
+
+        const w = Math.ceil(m.width + PADDING * 2);
+        const h = Math.ceil(ascent + descent + PADDING * 2);
+
+        canvas.width = w;
+        canvas.height = h;
+
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.font = `${SOURCE_FONT_WEIGHT} ${SOURCE_FONT_SIZE}px ${SOURCE_FONT_FAMILY}`;
+        ctx.fillStyle = "#fff";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillText(TEXT, PADDING, PADDING + ascent);
+
+        return { w, h };
+      }
+
+      function avgLuma(data, width, height, x0, y0, sx, sy) {
+        let sum = 0;
+        let count = 0;
+
+        const x1 = Math.min(width, x0 + sx);
+        const y1 = Math.min(height, y0 + sy);
+
+        for (let y = y0; y < y1; y++) {
+          let row = (y * width) * 4;
+          for (let x = x0; x < x1; x++) {
+            const i = row + x * 4;
+            const R = data[i];
+            const G = data[i + 1];
+            const B = data[i + 2];
+            const A = data[i + 3];
+            const luma = (0.2126 * R + 0.7152 * G + 0.0722 * B) * (A / 255);
+            sum += luma;
+            count++;
+          }
+        }
+
+        return count ? sum / count : 0;
+      }
+
+      function generateAsciiFromText() {
+        const canvas = document.getElementById("src");
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        if (!ctx) throw new Error("Could not create 2D canvas context");
+
+        const { w, h } = drawTextToCanvas(ctx, canvas);
+        const img = ctx.getImageData(0, 0, w, h);
+
+        const { data, width, height } = img;
+        const cols = Math.ceil(width / SAMPLE_X);
+        const rows = Math.ceil(height / SAMPLE_Y);
+
+        const plusLines = new Array(rows);
+        const minusLines = new Array(rows);
+
+        for (let r = 0; r < rows; r++) {
+          let plusRow = "";
+          let minusRow = "";
+
+          const y0 = r * SAMPLE_Y;
+
+          for (let c = 0; c < cols; c++) {
+            const x0 = c * SAMPLE_X;
+            const l = avgLuma(data, width, height, x0, y0, SAMPLE_X, SAMPLE_Y);
+
+            if (l > THRESH) {
+              plusRow += "+";
+              minusRow += " ";
+            } else {
+              plusRow += " ";
+              minusRow += "-";
+            }
+          }
+
+          plusLines[r] = plusRow;
+          minusLines[r] = minusRow;
+        }
+
+        // Crop to '+' content (tight bounds)
+        let top = 0;
+        while (top < rows && !plusLines[top].includes("+")) top++;
+        let bottom = rows - 1;
+        while (bottom >= 0 && !plusLines[bottom].includes("+")) bottom--;
+
+        if (bottom < top) {
+          throw new Error("No '+' pixels detected. Try lowering THRESH or increasing SOURCE_FONT_SIZE.");
+        }
+
+        let left = cols - 1;
+        let right = 0;
+        for (let r = top; r <= bottom; r++) {
+          const row = plusLines[r];
+          const first = row.indexOf("+");
+          const last = row.lastIndexOf("+");
+          if (first !== -1) left = Math.min(left, first);
+          if (last !== -1) right = Math.max(right, last);
+        }
+
+        const PAD = 2;
+        top = Math.max(0, top - PAD);
+        bottom = Math.min(rows - 1, bottom + PAD);
+        left = Math.max(0, left - PAD);
+        right = Math.min(cols - 1, right + PAD);
+
+        const plusOut = [];
+        const minusOut = [];
+        for (let r = top; r <= bottom; r++) {
+          plusOut.push(plusLines[r].slice(left, right + 1));
+          minusOut.push(minusLines[r].slice(left, right + 1));
+        }
+
+        return {
+          plus: plusOut.join(NL),
+          minus: minusOut.join(NL),
+        };
+      }
+
+      function runTests(out) {
+        assert(out.plus.length > 0, "plus output should not be empty");
+        assert(out.minus.length > 0, "minus output should not be empty");
+        assert(out.plus.includes("+"), "plus output should contain '+'");
+        assert(out.minus.includes("-"), "minus output should contain '-'");
+
+        const p = out.plus.split(NL);
+        const m = out.minus.split(NL);
+        assert(p.length === m.length, "plus and minus should have same number of lines");
+        for (let i = 0; i < p.length; i++) {
+          assert(p[i].length === m[i].length, "line widths should match between plus/minus");
+        }
+
+        const height = p.length;
+        const width = p[0].length;
+        assert(width / height > 2.0, "aspect ratio should be wide enough for 'kody.eth'");
+      }
+
+      function cssVar(name, fallback) {
+        const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        return v || fallback;
+      }
+
+      function measureCharWidthFromPre(preEl) {
+        // Use DOM measurement so column spacing matches the PRE exactly.
+        const probe = document.createElement("span");
+        probe.style.position = "absolute";
+        probe.style.left = "-9999px";
+        probe.style.top = "-9999px";
+        probe.style.whiteSpace = "pre";
+        probe.style.fontFamily = getComputedStyle(preEl).fontFamily;
+        probe.style.fontSize = getComputedStyle(preEl).fontSize;
+        probe.style.lineHeight = getComputedStyle(preEl).lineHeight;
+        probe.textContent = "+".repeat(32);
+        document.body.appendChild(probe);
+        const w = probe.getBoundingClientRect().width / 32;
+        probe.remove();
+        return w;
+      }
+
+      function createGradient(ctx, x0, x1) {
+        const g1 = cssVar("--g1", "#ffffff");
+        const g2 = cssVar("--g2", "#a7e2d0");
+        const g3 = cssVar("--g3", "#2fe4ab");
+        const grad = ctx.createLinearGradient(x0, 0, x1, 0);
+        grad.addColorStop(0, g1);
+        grad.addColorStop(0.5, g2);
+        grad.addColorStop(1, g3);
+        return grad;
+      }
+
+      function prefersReducedMotion() {
+        return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      }
+
+      function startBuildAnimation(out) {
+        const fx = document.getElementById("fx");
+        const stack = document.getElementById("stack");
+        const prePlus = document.getElementById("plus");
+
+        // If the user prefers reduced motion, skip animation and show static.
+        if (prefersReducedMotion()) {
+          document.body.dataset.mode = "static";
+          return;
+        }
+
+        // Freeze scroll to keep target rect stable.
+        const prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+
+        // Ensure layout is up to date before measuring.
+        const rect = stack.getBoundingClientRect();
+        const cellH = parseFloat(getComputedStyle(prePlus).lineHeight) || parseFloat(getComputedStyle(prePlus).fontSize);
+        const charW = measureCharWidthFromPre(prePlus);
+
+        const plusLines = out.plus.split(NL);
+        const minusLines = out.minus.split(NL);
+        const rows = plusLines.length;
+        const cols = plusLines[0].length;
+
+        // Canvas setup
+        const dpr = window.devicePixelRatio || 1;
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        fx.width = Math.round(vw * dpr);
+        fx.height = Math.round(vh * dpr);
+
+        const ctx = fx.getContext("2d");
+        if (!ctx) throw new Error("Could not create FX canvas context");
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.textBaseline = "top";
+        ctx.font = `700 ${cellH}px ${getComputedStyle(prePlus).fontFamily}`;
+
+        // Pre-render minus field to offscreen
+        const minusOpacity = parseFloat(cssVar("--minus-opacity", "0.10"));
+        const bg = document.createElement("canvas");
+        bg.width = fx.width;
+        bg.height = fx.height;
+        const bgCtx = bg.getContext("2d");
+        bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        bgCtx.textBaseline = "top";
+        bgCtx.font = ctx.font;
+        bgCtx.fillStyle = `rgba(255,255,255,${minusOpacity})`;
+
+        const originX = rect.left;
+        const originY = rect.top;
+
+        for (let r = 0; r < rows; r++) {
+          const line = minusLines[r];
+          for (let c = 0; c < cols; c++) {
+            if (line[c] === "-") {
+              bgCtx.fillText("-", originX + c * charW, originY + r * cellH);
+            }
+          }
+        }
+
+        // Offscreen settled layer
+        const settled = document.createElement("canvas");
+        settled.width = fx.width;
+        settled.height = fx.height;
+        const sCtx = settled.getContext("2d");
+        sCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        sCtx.textBaseline = "top";
+        sCtx.font = ctx.font;
+        sCtx.fillStyle = createGradient(sCtx, originX, originX + cols * charW);
+
+        // Build schedule (bottom-up bias)
+        const schedule = [];
+        for (let r = 0; r < rows; r++) {
+          const line = plusLines[r];
+          for (let c = 0; c < cols; c++) {
+            if (line[c] === "+") {
+              const base = (rows - 1 - r) * ANIM.ROW_DELAY_MS;
+              const jitter = Math.random() * ANIM.ROW_JITTER_MS;
+              schedule.push({ r, c, spawnAt: base + jitter });
+            }
+          }
+        }
+        schedule.sort((a, b) => a.spawnAt - b.spawnAt);
+
+        // Particles
+        const particles = [];
+        let idx = 0;
+        let landed = 0;
+
+        function spawn(cell) {
+          const depth = rows <= 1 ? 0 : (cell.r / (rows - 1));
+          const targetX = originX + cell.c * charW;
+          const targetY = originY + cell.r * cellH;
+
+          // Start from the top of the viewport (slightly above) so it feels like it falls "from above".
+          const startY = -Math.random() * vh * 0.7 - cellH;
+
+          const v0 = ANIM.V0_MIN + Math.random() * ANIM.V0_JITTER + depth * ANIM.V0_DEPTH_BOOST;
+          particles.push({
+            x: targetX,
+            y: startY,
+            vy: v0,
+            ty: targetY,
+          });
+        }
+
+        // Draw loop
+        let raf = 0;
+        let start = performance.now();
+        let last = start;
+        const gradMain = createGradient(ctx, originX, originX + cols * charW);
+
+        function frame(now) {
+          const elapsed = now - start;
+          const dt = Math.min(0.033, (now - last) / 1000);
+          last = now;
+
+          // Spawn due particles
+          let spawned = 0;
+          while (idx < schedule.length && schedule[idx].spawnAt <= elapsed && spawned < ANIM.MAX_SPAWNS_PER_FRAME) {
+            spawn(schedule[idx]);
+            idx++;
+            spawned++;
+          }
+
+          // Update particles + settle
+          for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.vy += ANIM.GRAVITY * dt;
+            p.y += p.vy * dt;
+
+            if (p.y >= p.ty) {
+              // Commit to settled layer
+              sCtx.fillText("+", p.x, p.ty);
+              particles.splice(i, 1);
+              landed++;
+            }
+          }
+
+          // Render
+          ctx.clearRect(0, 0, vw, vh);
+          ctx.fillStyle = "#000";
+          ctx.fillRect(0, 0, vw, vh);
+          ctx.drawImage(bg, 0, 0, vw, vh);
+          ctx.drawImage(settled, 0, 0, vw, vh);
+
+          if (particles.length) {
+            ctx.fillStyle = gradMain;
+            for (let i = 0; i < particles.length; i++) {
+              const p = particles[i];
+              ctx.fillText("+", p.x, p.y);
+            }
+          }
+
+          const done = (idx >= schedule.length) && (landed >= schedule.length) && particles.length === 0;
+          if (done) {
+            // Quick fade to static layout
+            const t0 = performance.now();
+            const fade = (tNow) => {
+              const k = Math.min(1, (tNow - t0) / ANIM.FADE_TO_STATIC_MS);
+              fx.style.opacity = String(1 - k);
+              if (k < 1) {
+                requestAnimationFrame(fade);
+              } else {
+                fx.style.opacity = "1";
+                document.body.dataset.mode = "static";
+                document.body.style.overflow = prevOverflow;
+              }
+            };
+            requestAnimationFrame(fade);
+            return;
+          }
+
+          raf = requestAnimationFrame(frame);
+        }
+
+        // Kick
+        document.body.dataset.mode = "anim";
+        fx.style.opacity = "1";
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(frame);
+
+        // Replay hook
+        function replay() {
+          cancelAnimationFrame(raf);
+          // Clear layers
+          sCtx.clearRect(0, 0, vw, vh);
+          particles.length = 0;
+          idx = 0;
+          landed = 0;
+          start = performance.now();
+          last = start;
+          document.body.dataset.mode = "anim";
+          fx.style.opacity = "1";
+          raf = requestAnimationFrame(frame);
+        }
+
+        // Expose replay for key handler
+        window.__replayKodyAscii = replay;
+      }
+
+      try {
+        await ensureSourceFontLoaded();
+        const out = generateAsciiFromText();
+        runTests(out);
+
+        // Populate static PREs (kept for copy/select + as final resting state)
+        document.getElementById("plus").textContent = out.plus;
+        document.getElementById("minus").textContent = out.minus;
+
+        // Start animation on next frame so PRE layout is measurable
+        requestAnimationFrame(() => startBuildAnimation(out));
+
+        // Keyboard replay
+        window.addEventListener("keydown", (e) => {
+          if ((e.key || "").toLowerCase() === "k" && typeof window.__replayKodyAscii === "function") {
+            window.__replayKodyAscii();
+          }
+        });
+
+        // If the viewport changes, replay (keeps alignment correct)
+        let resizeT = 0;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeT);
+          resizeT = setTimeout(() => {
+            if (typeof window.__replayKodyAscii === "function") window.__replayKodyAscii();
+          }, 150);
+        });
+
+      } catch (e) {
+        console.error(e);
+        showError(String(e && e.stack ? e.stack : e));
+        document.body.dataset.mode = "static";
+      }
+    })();
+  </script>
+</body>
+</html>

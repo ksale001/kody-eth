@@ -6,8 +6,83 @@
   color-scheme: dark;
 }
 
+@font-face {
+  font-family: "DM Sans Local";
+  src: url("/kody-eth-drop/DMSans-VariableFont_opsz,wght.ttf") format("truetype-variations");
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
   background: #0b0b0d;
+}
+
+.kody-ascii {
+  --kody-cell: clamp(1.6px, 0.24vw + 0.6px, 3.2px);
+  --kody-minus-opacity: 0.1;
+  --kody-g1: #ffffff;
+  --kody-g2: #a7e2d0;
+  --kody-g3: #2fe4ab;
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.kody-ascii__stack {
+  display: grid;
+}
+
+.kody-ascii__pre {
+  grid-area: 1 / 1;
+  margin: 0;
+  white-space: pre;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: var(--kody-cell);
+  line-height: var(--kody-cell);
+  letter-spacing: 0;
+  user-select: none;
+}
+
+.kody-ascii__minus {
+  color: rgba(255, 255, 255, var(--kody-minus-opacity));
+  pointer-events: none;
+}
+
+.kody-ascii__plus {
+  background: linear-gradient(90deg, var(--kody-g1) 0%, var(--kody-g2) 50%, var(--kody-g3) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  user-select: all;
+}
+
+.kody-ascii__fx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: none;
+}
+
+.kody-ascii[data-mode="anim"] .kody-ascii__pre {
+  opacity: 0;
+}
+
+.kody-ascii[data-mode="anim"] .kody-ascii__fx {
+  display: block;
+}
+
+.kody-ascii[data-mode="static"] .kody-ascii__pre {
+  opacity: 0;
+}
+
+.kody-ascii[data-mode="static"] .kody-ascii__fx {
+  display: block;
 }

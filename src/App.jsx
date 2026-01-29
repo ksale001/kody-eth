@@ -44,6 +44,434 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
+function KodyAsciiHero({ text = "kody.eth" }) {
+  const containerRef = useRef(null);
+  const stackRef = useRef(null);
+  const plusRef = useRef(null);
+  const minusRef = useRef(null);
+  const fxRef = useRef(null);
+  const replayRef = useRef(null);
+  const reducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const stack = stackRef.current;
+    const prePlus = plusRef.current;
+    const preMinus = minusRef.current;
+    const fx = fxRef.current;
+
+    if (!container || !stack || !prePlus || !preMinus || !fx) return undefined;
+
+    let raf = 0;
+    let resizeTimer = 0;
+    let destroyed = false;
+
+    const NL = String.fromCharCode(10);
+
+    const SOURCE_FONT_FAMILY = '"DM Sans Local", "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+    const SOURCE_FONT_WEIGHT = 700;
+    const SOURCE_FONT_SIZE = 320;
+    const SAMPLE_X = 5;
+    const SAMPLE_Y = 7;
+    const THRESH = 60;
+    const PADDING = 48;
+
+    const ANIM = {
+      ROW_DELAY_MS: 35,
+      ROW_JITTER_MS: 280,
+      GRAVITY: 5200,
+      V0_MIN: 2200,
+      V0_JITTER: 900,
+      V0_DEPTH_BOOST: 1200,
+      MAX_SPAWNS_PER_FRAME: 120,
+      FADE_TO_STATIC_MS: 120,
+    };
+
+    function cssVar(name, fallback) {
+      const v = getComputedStyle(container).getPropertyValue(name).trim();
+      return v || fallback;
+    }
+
+    function prefersReducedMotion() {
+      return reducedMotion;
+    }
+
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    async function ensureSourceFontLoaded() {
+      if (!document.fonts || !document.fonts.load) return;
+      const spec = `${SOURCE_FONT_WEIGHT} ${SOURCE_FONT_SIZE}px "DM Sans Local"`;
+      try {
+        await Promise.race([document.fonts.load(spec, text), sleep(2500)]);
+        await Promise.race([document.fonts.ready, sleep(2500)]);
+      } catch {
+        // Best effort.
+      }
+    }
+
+    function drawTextToCanvas(ctx, canvas) {
+      ctx.font = `${SOURCE_FONT_WEIGHT} ${SOURCE_FONT_SIZE}px ${SOURCE_FONT_FAMILY}`;
+      const m = ctx.measureText(text);
+      const ascent = Math.ceil(m.actualBoundingBoxAscent || SOURCE_FONT_SIZE * 0.8);
+      const descent = Math.ceil(m.actualBoundingBoxDescent || SOURCE_FONT_SIZE * 0.2);
+      const w = Math.ceil(m.width + PADDING * 2);
+      const h = Math.ceil(ascent + descent + PADDING * 2);
+
+      canvas.width = w;
+      canvas.height = h;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, w, h);
+      ctx.font = `${SOURCE_FONT_WEIGHT} ${SOURCE_FONT_SIZE}px ${SOURCE_FONT_FAMILY}`;
+      ctx.fillStyle = "#fff";
+      ctx.textBaseline = "alphabetic";
+      ctx.fillText(text, PADDING, PADDING + ascent);
+      return { w, h };
+    }
+
+    function avgLuma(data, width, height, x0, y0, sx, sy) {
+      let sum = 0;
+      let count = 0;
+      const x1 = Math.min(width, x0 + sx);
+      const y1 = Math.min(height, y0 + sy);
+      for (let y = y0; y < y1; y++) {
+        const row = y * width * 4;
+        for (let x = x0; x < x1; x++) {
+          const i = row + x * 4;
+          const R = data[i];
+          const G = data[i + 1];
+          const B = data[i + 2];
+          const A = data[i + 3];
+          const luma = (0.2126 * R + 0.7152 * G + 0.0722 * B) * (A / 255);
+          sum += luma;
+          count++;
+        }
+      }
+      return count ? sum / count : 0;
+    }
+
+    function generateAsciiFromText() {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      if (!ctx) throw new Error("Could not create 2D canvas context");
+
+      const { w, h } = drawTextToCanvas(ctx, canvas);
+      const img = ctx.getImageData(0, 0, w, h);
+
+      const { data, width, height } = img;
+      const cols = Math.ceil(width / SAMPLE_X);
+      const rows = Math.ceil(height / SAMPLE_Y);
+
+      const plusLines = new Array(rows);
+      const minusLines = new Array(rows);
+
+      for (let r = 0; r < rows; r++) {
+        let plusRow = "";
+        let minusRow = "";
+        const y0 = r * SAMPLE_Y;
+        for (let c = 0; c < cols; c++) {
+          const x0 = c * SAMPLE_X;
+          const l = avgLuma(data, width, height, x0, y0, SAMPLE_X, SAMPLE_Y);
+          if (l > THRESH) {
+            plusRow += "+";
+            minusRow += " ";
+          } else {
+            plusRow += " ";
+            minusRow += "-";
+          }
+        }
+        plusLines[r] = plusRow;
+        minusLines[r] = minusRow;
+      }
+
+      let top = 0;
+      while (top < rows && !plusLines[top].includes("+")) top++;
+      let bottom = rows - 1;
+      while (bottom >= 0 && !plusLines[bottom].includes("+")) bottom--;
+
+      if (bottom < top) throw new Error("No '+' pixels detected. Try lowering THRESH.");
+
+      let left = cols - 1;
+      let right = 0;
+      for (let r = top; r <= bottom; r++) {
+        const row = plusLines[r];
+        const first = row.indexOf("+");
+        const last = row.lastIndexOf("+");
+        if (first !== -1) left = Math.min(left, first);
+        if (last !== -1) right = Math.max(right, last);
+      }
+
+      const PAD = 2;
+      top = Math.max(0, top - PAD);
+      bottom = Math.min(rows - 1, bottom + PAD);
+      left = Math.max(0, left - PAD);
+      right = Math.min(cols - 1, right + PAD);
+
+      const plusOut = [];
+      const minusOut = [];
+      for (let r = top; r <= bottom; r++) {
+        plusOut.push(plusLines[r].slice(left, right + 1));
+        minusOut.push(minusLines[r].slice(left, right + 1));
+      }
+
+      return {
+        plus: plusOut.join(NL),
+        minus: minusOut.join(NL),
+      };
+    }
+
+    function measureCharWidthFromPre(preEl) {
+      const probe = document.createElement("span");
+      probe.style.position = "absolute";
+      probe.style.left = "-9999px";
+      probe.style.top = "-9999px";
+      probe.style.whiteSpace = "pre";
+      probe.style.fontFamily = getComputedStyle(preEl).fontFamily;
+      probe.style.fontSize = getComputedStyle(preEl).fontSize;
+      probe.style.lineHeight = getComputedStyle(preEl).lineHeight;
+      probe.textContent = "+".repeat(32);
+      document.body.appendChild(probe);
+      const w = probe.getBoundingClientRect().width / 32;
+      probe.remove();
+      return w;
+    }
+
+    function createGradient(ctx, x0, x1) {
+      const g1 = cssVar("--kody-g1", "#ffffff");
+      const g2 = cssVar("--kody-g2", "#a7e2d0");
+      const g3 = cssVar("--kody-g3", "#2fe4ab");
+      const grad = ctx.createLinearGradient(x0, 0, x1, 0);
+      grad.addColorStop(0, g1);
+      grad.addColorStop(0.5, g2);
+      grad.addColorStop(1, g3);
+      return grad;
+    }
+
+    function startBuildAnimation(out) {
+      if (prefersReducedMotion()) {
+        container.dataset.mode = "static-text";
+        return;
+      }
+
+      const rect = stack.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const cellH = parseFloat(getComputedStyle(prePlus).lineHeight) || parseFloat(getComputedStyle(prePlus).fontSize);
+      const charW = measureCharWidthFromPre(prePlus);
+
+      const plusLines = out.plus.split(NL);
+      const minusLines = out.minus.split(NL);
+      const rows = plusLines.length;
+      const cols = plusLines[0].length;
+
+      const dpr = window.devicePixelRatio || 1;
+      const vw = Math.max(1, Math.floor(containerRect.width));
+      const vh = Math.max(1, Math.floor(containerRect.height));
+      fx.width = Math.round(vw * dpr);
+      fx.height = Math.round(vh * dpr);
+
+      const ctx = fx.getContext("2d");
+      if (!ctx) throw new Error("Could not create FX canvas context");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.textBaseline = "top";
+      ctx.font = `700 ${cellH}px ${getComputedStyle(prePlus).fontFamily}`;
+
+      const minusOpacity = parseFloat(cssVar("--kody-minus-opacity", "0.10"));
+      const bg = document.createElement("canvas");
+      bg.width = fx.width;
+      bg.height = fx.height;
+      const bgCtx = bg.getContext("2d");
+      bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      bgCtx.textBaseline = "top";
+      bgCtx.font = ctx.font;
+      bgCtx.fillStyle = `rgba(255,255,255,${minusOpacity})`;
+
+      const originX = rect.left - containerRect.left;
+      const originY = rect.top - containerRect.top;
+
+      for (let r = 0; r < rows; r++) {
+        const line = minusLines[r];
+        for (let c = 0; c < cols; c++) {
+          if (line[c] === "-") {
+            bgCtx.fillText("-", originX + c * charW, originY + r * cellH);
+          }
+        }
+      }
+
+      const settled = document.createElement("canvas");
+      settled.width = fx.width;
+      settled.height = fx.height;
+      const sCtx = settled.getContext("2d");
+      sCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      sCtx.textBaseline = "top";
+      sCtx.font = ctx.font;
+      sCtx.fillStyle = createGradient(sCtx, originX, originX + cols * charW);
+
+      const schedule = [];
+      for (let r = 0; r < rows; r++) {
+        const line = plusLines[r];
+        for (let c = 0; c < cols; c++) {
+          if (line[c] === "+") {
+            const base = (rows - 1 - r) * ANIM.ROW_DELAY_MS;
+            const jitter = Math.random() * ANIM.ROW_JITTER_MS;
+            schedule.push({ r, c, spawnAt: base + jitter });
+          }
+        }
+      }
+      schedule.sort((a, b) => a.spawnAt - b.spawnAt);
+
+      const particles = [];
+      let idx = 0;
+      let landed = 0;
+
+      function spawn(cell) {
+        const depth = rows <= 1 ? 0 : (cell.r / (rows - 1));
+        const targetX = originX + cell.c * charW;
+        const targetY = originY + cell.r * cellH;
+        const startY = -Math.random() * vh * 0.7 - cellH;
+        const v0 = ANIM.V0_MIN + Math.random() * ANIM.V0_JITTER + depth * ANIM.V0_DEPTH_BOOST;
+        particles.push({ x: targetX, y: startY, vy: v0, ty: targetY });
+      }
+
+      let start = performance.now();
+      let last = start;
+      const gradMain = createGradient(ctx, originX, originX + cols * charW);
+
+      function frame(now) {
+        const elapsed = now - start;
+        const dt = Math.min(0.033, (now - last) / 1000);
+        last = now;
+
+        let spawned = 0;
+        while (idx < schedule.length && schedule[idx].spawnAt <= elapsed && spawned < ANIM.MAX_SPAWNS_PER_FRAME) {
+          spawn(schedule[idx]);
+          idx++;
+          spawned++;
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.vy += ANIM.GRAVITY * dt;
+          p.y += p.vy * dt;
+          if (p.y >= p.ty) {
+            sCtx.fillText("+", p.x, p.ty);
+            particles.splice(i, 1);
+            landed++;
+          }
+        }
+
+        ctx.clearRect(0, 0, vw, vh);
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, vw, vh);
+        ctx.drawImage(bg, 0, 0, vw, vh);
+        ctx.drawImage(settled, 0, 0, vw, vh);
+
+        if (particles.length) {
+          ctx.fillStyle = gradMain;
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            ctx.fillText("+", p.x, p.y);
+          }
+        }
+
+        const done = idx >= schedule.length && landed >= schedule.length && particles.length === 0;
+        if (done) {
+          const t0 = performance.now();
+          const fade = (tNow) => {
+            const k = Math.min(1, (tNow - t0) / ANIM.FADE_TO_STATIC_MS);
+            fx.style.opacity = String(1 - k);
+            if (k < 1) {
+              requestAnimationFrame(fade);
+            } else {
+                fx.style.opacity = "1";
+                container.dataset.mode = "static";
+              }
+            };
+            requestAnimationFrame(fade);
+            return;
+        }
+
+        raf = requestAnimationFrame(frame);
+      }
+
+      function replay() {
+        cancelAnimationFrame(raf);
+        particles.length = 0;
+        idx = 0;
+        landed = 0;
+        start = performance.now();
+        last = start;
+        container.dataset.mode = "anim";
+        fx.style.opacity = "1";
+        raf = requestAnimationFrame(frame);
+      }
+
+      replayRef.current = replay;
+      container.dataset.mode = "anim";
+      fx.style.opacity = "1";
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(frame);
+    }
+
+    async function start() {
+      try {
+        await ensureSourceFontLoaded();
+        const out = generateAsciiFromText();
+        prePlus.textContent = out.plus;
+        preMinus.textContent = out.minus;
+        requestAnimationFrame(() => startBuildAnimation(out));
+      } catch {
+        container.dataset.mode = "static-text";
+      }
+    }
+
+    const runWhenReady = () => {
+      if (destroyed) return;
+      start();
+    };
+
+    if (document.readyState === "complete") {
+      runWhenReady();
+    } else {
+      window.addEventListener("load", runWhenReady, { once: true });
+    }
+
+    const onKeyDown = (e) => {
+      if ((e.key || "").toLowerCase() === "k") {
+        replayRef.current?.();
+      }
+    };
+
+    const onResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        replayRef.current?.();
+      }, 150);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      destroyed = true;
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("load", runWhenReady);
+      cancelAnimationFrame(raf);
+      clearTimeout(resizeTimer);
+    };
+  }, [reducedMotion, text]);
+
+  return (
+    <div ref={containerRef} className="kody-ascii" data-mode="anim">
+      <canvas ref={fxRef} className="kody-ascii__fx" aria-hidden="true" />
+      <div ref={stackRef} className="kody-ascii__stack">
+        <pre ref={minusRef} className="kody-ascii__pre kody-ascii__minus" aria-hidden="true" />
+        <pre ref={plusRef} className="kody-ascii__pre kody-ascii__plus" aria-label={`${text} ASCII art`} />
+      </div>
+    </div>
+  );
+}
+
 // ---------------------------
 // ASCII background (merge.txt)
 // ---------------------------
@@ -599,28 +1027,11 @@ export default function KodyEthPreview() {
       {/* Main */}
       <main className="mx-auto max-w-5xl px-5 pb-24 pt-10">
         {/* Hero */}
-        <section className="pt-8">
-          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/55 p-5 shadow-xl backdrop-blur">
+        <section className="pt-6">
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/55 p-4 shadow-xl backdrop-blur">
             <div className="flex flex-col gap-4">
-              <pre className="whitespace-pre-wrap font-mono text-[13px] leading-5 text-zinc-100">
-{`┌────────────────────────────────────────────────────────────────────────────┐
-│ $ What_is_this                                                             │
-│ > Welcome to kody.eth.limo (-) here you’ll find my work, my writing, my     │
-│ > hobbies, and a little internet trail of things worth sharing.            │
-└────────────────────────────────────────────────────────────────────────────┘`}
-              </pre>
+              <KodyAsciiHero />
 
-              <div className="flex justify-end">
-                <div className="flex items-center gap-2 text-xs text-zinc-300/80">
-                  <span className="font-mono">ENS:</span>
-                  <button
-                    onClick={() => copy(ens, "ens")}
-                    className="rounded-xl border border-zinc-800/60 bg-zinc-900/35 px-2 py-1 font-mono hover:bg-zinc-900/55 focus:outline-none focus:ring-2 focus:ring-zinc-200/30"
-                  >
-                    {ens}
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
 
