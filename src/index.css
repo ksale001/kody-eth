@@ -11,3 +11,33 @@ body {
   min-height: 100vh;
   background: #0b0b0d;
 }
+
+.pong-hero-card {
+  border-radius: 24px;
+  border: 1px solid rgba(39, 39, 42, 0.7);
+  background: rgba(9, 9, 11, 0.55);
+  padding: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+}
+
+.pong-hero-inner {
+  border-radius: 18px;
+  border: 1px solid rgba(39, 39, 42, 0.6);
+  background: rgba(9, 9, 11, 0.5);
+  padding: 12px;
+}
+
+.pong-hero-pre {
+  margin: 0;
+  white-space: pre;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 12px;
+  color: #f4f4f5;
+  user-select: none;
+}
+
+.pong-hero-slot {
+  margin-bottom: 16px;
+}

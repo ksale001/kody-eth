@@ -27,6 +27,287 @@ function classNames(...xs) {
   return xs.filter(Boolean).join(" ");
 }
 
+function SmoothlyCaseStudy() {
+  return (
+    <div className="min-h-screen bg-zinc-950">
+      <header className="sticky top-0 z-40 border-b border-zinc-800/60 bg-zinc-950/70 backdrop-blur">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
+          <a className="font-mono text-xs text-zinc-300/80 hover:text-zinc-100" href="/">
+            ← back to kody.eth
+          </a>
+          <span className="font-mono text-xs text-zinc-500/80">case study / smoothly</span>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-5xl px-5 pb-24 pt-10">
+        <section className="rounded-3xl border border-zinc-800/70 bg-zinc-950/55 p-6 shadow-xl backdrop-blur">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-300/80">
+              <span className="rounded-full border border-zinc-800/70 px-3 py-1 font-mono">Smoothly</span>
+              <span className="rounded-full border border-zinc-800/70 px-3 py-1 font-mono">Case study</span>
+              <span className="rounded-full border border-zinc-800/70 px-3 py-1 font-mono">2022 → 2024</span>
+            </div>
+            <h1 className="text-2xl font-semibold text-zinc-100">Smoothly: A Case Study</h1>
+            <p className="text-sm leading-6 text-zinc-200/85">
+              Smoothly is a solo‑stakers smoothing pool: point your validators fee recipient to the pool contract,
+              register, and claim a share of pooled tips and MEV every 21 days.
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/40 p-4">
+                <div className="font-mono text-xs text-zinc-400/80">role</div>
+                <div className="mt-2 text-sm text-zinc-200/90">Founder — product, protocol design, positioning, GTM</div>
+              </div>
+              <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/40 p-4">
+                <div className="font-mono text-xs text-zinc-400/80">team</div>
+                <div className="mt-2 text-sm text-zinc-200/90">1 full‑stack engineer, 1 graphic designer</div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2 text-xs text-zinc-300/80">
+              <a className="rounded-xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 hover:bg-zinc-900/55" href="https://smoothly.money/" target="_blank" rel="noreferrer">Website</a>
+              <a className="rounded-xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 hover:bg-zinc-900/55" href="https://docs.smoothly.money/" target="_blank" rel="noreferrer">Docs</a>
+              <a className="rounded-xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 hover:bg-zinc-900/55" href="https://github.com/Smoothly-Protocol" target="_blank" rel="noreferrer">GitHub</a>
+              <a className="rounded-xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 hover:bg-zinc-900/55" href="https://github.com/noahfigueras/contractsV2" target="_blank" rel="noreferrer">V2 design</a>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-3 md:grid-cols-3">
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">who it’s for</div>
+            <div className="mt-2 text-sm text-zinc-200/90">
+              Home stakers and independent operators who want more consistent execution‑layer rewards without giving up custody.
+            </div>
+          </div>
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">outcome</div>
+            <div className="mt-2 text-sm text-zinc-200/90">
+              Smoothed execution‑layer rewards using a trust‑minimized oracle network, a bond/penalty system, and a not‑for‑profit fee model.
+            </div>
+          </div>
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">topline</div>
+            <div className="mt-2 text-sm text-zinc-200/90">Peak TVL ~ $20M · Public‑goods donations ~ $150k</div>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-3 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">context</div>
+            <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
+              <p>
+                In 2021–2022, MEV and tips were extremely high, and the Merge was on the horizon. Post‑merge, stakers
+                would receive execution‑layer rewards. Solo stakers only expected a handful of block proposals per year,
+                and the odds of any one being a “lottery block” with massive MEV were even lower.
+              </p>
+              <p>
+                I wanted a way to access the “average” block reward and believed pooling execution‑layer rewards would
+                be more profitable than going solo. That thesis was later validated by Ken Smith’s Rocket Pool research.
+              </p>
+              <p>
+                It was also obvious solo staking would come under pressure from large providers who could smooth rewards
+                by default. Beyond smoothing, this was about keeping solo staking competitive and incentivizing solo stakers
+                using Ethereum’s public‑goods ecosystem to reinforce decentralization.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">early timeline</div>
+            <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
+              <li>Aug 25, 2022 — first public mention in EthStaker Discord</li>
+              <li>Sep 2022 — The Merge</li>
+              <li>Nov 2022 — Devconnect: Ken Smith shares smoothing analysis</li>
+              <li>Feb 2023 — PoC on Goerli; early testing with a handful of users</li>
+              <li>Mar 2023 — Dappnode competitor; duopoly emerges</li>
+              <li>May 2023 — onboard rockstar oracle operators</li>
+              <li>Sep 2023 — EF grant won for MEV smoothing research</li>
+              <li>Jan 2024 — mainnet launch</li>
+              <li>Mar 2024 — Dencun POAP donations juice the pool</li>
+              <li>Mar 2024 — Smoothly passes 100 subscribers</li>
+              <li>Jul 2024 — peaks at ~20M total stake subscribed</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-3 md:grid-cols-2">
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">the problem</div>
+            <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
+              <li>Execution‑layer rewards (MEV + tips) are spiky and unpredictable for solo stakers.</li>
+              <li>Large staking providers can smooth rewards across big validator sets. Solo stakers can’t.</li>
+              <li>That creates a structural disadvantage and lower APY even for excellent operators.</li>
+            </ul>
+          </div>
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">why it mattered</div>
+            <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
+              <li>Solo staking is the long tail that keeps Ethereum decentralized.</li>
+              <li>If solo stakers become uncompetitive, staking centralizes.</li>
+              <li>Incentivizing solo staking keeps independent operators in the game.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-3 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">audience + positioning</div>
+            <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
+              <p><strong>Primary ICP (v1):</strong> solo / home stakers running their own validators.</p>
+              <p><strong>Secondary audiences:</strong> small staking entities running hundreds of keys.</p>
+              <p><strong>Tagline:</strong> Solo stakers smoothing pool. Maximize rewards, incentivize home staking.</p>
+              <div>
+                <div className="font-mono text-xs text-zinc-400/80">key differentiators</div>
+                <ul className="mt-2 space-y-2">
+                  <li>Trust‑minimized: 6 oracle operators; contract updates require ≥66% consensus.</li>
+                  <li>Not‑for‑profit public good: 1.5% fee split to cover gas; no team fee.</li>
+                  <li>Simple: change fee recipient, register, claim every 21 days (or let it accrue).</li>
+                  <li>Security‑minded: 0.5 ETH bond per validator and penalties to deter MEV theft.</li>
+                  <li>Open source but realistic: bridge until MEV smoothing/burn is enshrined.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">strategy</div>
+            <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
+              <p><strong>The wedge:</strong> Treat MEV as the lottery. We all have to play, better odds together.</p>
+              <p><strong>GTM approach:</strong> claim rewards even when you don’t propose blocks; keep setup actionable.</p>
+              <p><strong>Narrative pillars:</strong> solo stakers shouldn’t be forced gamblers; reward smoothing is a primitive;
+                decentralization must be economically competitive; open‑source public good.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-3 md:grid-cols-2">
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">pivot + positioning</div>
+            <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
+              <p>
+                In early 2023, I learned Dappnode was building a competing smoothing pool. They had stronger brand
+                awareness. I planned a modest ~5% fee to fund development.
+              </p>
+              <p>
+                Once it became a duopoly, I reduced the fee to <strong>1.5%</strong> (cost coverage) and repositioned
+                Smoothly as an <strong>open‑source public good</strong> for solo stakers.
+              </p>
+              <p>
+                That repositioning became real and directly led to <strong>SLIDE</strong> (public‑goods funding routed back into
+                the pool, with no personal fee taken).
+              </p>
+            </div>
+          </div>
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">trust as a strategy</div>
+            <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
+              <p>
+                Oracle operator selection was a deliberate trust lever: recruit high‑signal, Ethereum‑aligned operators who
+                solo stakers already trust, and align incentives so the system is sustainable without becoming extractive.
+              </p>
+              <ul className="space-y-2">
+                <li>Bond + penalties to deter MEV theft and misconfiguration.</li>
+                <li>Oracle consensus before state updates.</li>
+                <li>Operators: The Daily Gwei, EthStaker, Aestus Relay, Yorrick (Eth‑Docker).</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-3 lg:grid-cols-[1fr_1fr]">
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">results</div>
+            <div className="mt-3 space-y-2 text-sm text-zinc-200/85">
+              <p><strong>Peak TVL:</strong> ~ $20M</p>
+              <p><strong>Public goods donations:</strong> ~ $150k routed directly into the smoothing pool</p>
+              <p>In 2024, subscribers received more than 3x expected MEV rewards.</p>
+              <p>Dencun POAP donations doubled subscriber count in ~2 weeks.</p>
+            </div>
+          </div>
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">tradeoffs</div>
+            <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
+              <li>Competed on narrative and incentives vs brand awareness.</li>
+              <li>Removed ~5% dev fee to build trust; funding became a question.</li>
+              <li>Public‑goods commitment made “open‑source public good” real.</li>
+              <li>Trust‑minimized design had to stay simple for solo stakers.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-3 md:grid-cols-2">
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">do again</div>
+            <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
+              <li>Open‑source public good narrative.</li>
+              <li>Oracle operator selection as the core trust/GTM lever.</li>
+              <li>Simple claim interval.</li>
+              <li>SLIDE as the mechanism that turned incentivize‑solo‑staking into reality.</li>
+            </ul>
+          </div>
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">change</div>
+            <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
+              <li>Lower the 0.5 ETH bond (barrier at scale).</li>
+              <li>Remove the fee entirely for cleaner alignment.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-3 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">proof + links</div>
+            <div className="mt-3 space-y-2 text-sm text-zinc-200/85">
+              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 px-3 py-2">
+                Smoothly landing page: <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://smoothly.money/" target="_blank" rel="noreferrer">smoothly.money</a>
+              </div>
+              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 px-3 py-2">
+                App / dashboard (deprecated): <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://app.smoothly.money/" target="_blank" rel="noreferrer">app.smoothly.money</a>
+              </div>
+              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 px-3 py-2">
+                Docs home: <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://docs.smoothly.money/" target="_blank" rel="noreferrer">docs.smoothly.money</a>
+              </div>
+              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 px-3 py-2">
+                Oracle operators: <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://docs.smoothly.money/oracle-operators" target="_blank" rel="noreferrer">oracle operators</a>
+              </div>
+              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 px-3 py-2">
+                Bond + MEV theft: <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://docs.smoothly.money/bond-and-mev-theft" target="_blank" rel="noreferrer">bond + MEV theft</a>
+              </div>
+              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 px-3 py-2">
+                Penalties: <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://docs.smoothly.money/penalties" target="_blank" rel="noreferrer">penalties</a>
+              </div>
+              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 px-3 py-2">
+                SLIDE initiative: <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://docs.smoothly.money/social-layer-incentives-for-decentralization-slide" target="_blank" rel="noreferrer">SLIDE</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">media placeholders</div>
+            <div className="mt-3 space-y-2 text-xs text-zinc-300/80">
+              <div className="rounded-2xl border border-dashed border-zinc-800/60 bg-zinc-950/40 p-3">
+                <div className="font-mono">[screenshot]</div>
+                <div>EthStaker Discord first post</div>
+              </div>
+              <div className="rounded-2xl border border-dashed border-zinc-800/60 bg-zinc-950/40 p-3">
+                <div className="font-mono">[screenshot]</div>
+                <div>Devconnect / Ken Smith analysis slide</div>
+              </div>
+              <div className="rounded-2xl border border-dashed border-zinc-800/60 bg-zinc-950/40 p-3">
+                <div className="font-mono">[photo]</div>
+                <div>Goerli PoC dashboard + team shots</div>
+              </div>
+              <div className="rounded-2xl border border-dashed border-zinc-800/60 bg-zinc-950/40 p-3">
+                <div className="font-mono">[photo]</div>
+                <div>Dappnode collab / “duopoly era”</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
 
@@ -222,6 +503,11 @@ function runSelfTestsOnce() {
 }
 
 export default function KodyEthPreview() {
+  const isSmoothlyCaseStudy = typeof window !== "undefined" && window.location.pathname.startsWith("/smoothly");
+
+  if (isSmoothlyCaseStudy) {
+    return <SmoothlyCaseStudy />;
+  }
   const reducedMotion = usePrefersReducedMotion();
 
   // Run self-tests once (best-effort)
@@ -598,6 +884,7 @@ export default function KodyEthPreview() {
 
       {/* Main */}
       <main className="mx-auto max-w-5xl px-5 pb-24 pt-10">
+        <div id="pong-hero" className="pong-hero-slot" />
         {/* Hero */}
         <section className="pt-8">
           <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/55 p-5 shadow-xl backdrop-blur">
@@ -605,22 +892,11 @@ export default function KodyEthPreview() {
               <pre className="whitespace-pre-wrap font-mono text-[13px] leading-5 text-zinc-100">
 {`┌────────────────────────────────────────────────────────────────────────────┐
 │ $ What_is_this                                                             │
-│ > Welcome to kody.eth.limo (-) here you’ll find my work, my writing, my     │
-│ > hobbies, and a little internet trail of things worth sharing.            │
+│ > Welcome to kody.eth.limo (-) here you'll find a little bit about my     │
+│ > life, my work, my hobbies, and anything else i feel like sharing.        │
 └────────────────────────────────────────────────────────────────────────────┘`}
               </pre>
 
-              <div className="flex justify-end">
-                <div className="flex items-center gap-2 text-xs text-zinc-300/80">
-                  <span className="font-mono">ENS:</span>
-                  <button
-                    onClick={() => copy(ens, "ens")}
-                    className="rounded-xl border border-zinc-800/60 bg-zinc-900/35 px-2 py-1 font-mono hover:bg-zinc-900/55 focus:outline-none focus:ring-2 focus:ring-zinc-200/30"
-                  >
-                    {ens}
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -671,20 +947,34 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
           <div className="space-y-3">
             <ImpactCard
               open={workExpandFirst}
-              title="Obol Network"
-              subtitle="Product marketing + growth ops for staking infrastructure"
+              title={
+                <img
+                  src="/obol/screenshots/obol-horizontal-primary.png"
+                  alt="Obol Network"
+                  className="h-10 w-48 rounded-full border border-zinc-800/60 bg-zinc-900/40 object-contain px-2"
+                />
+              }
+              subtitle="Scaling and Decentralizing Ethereum"
               impact={["launch systems", "operator programs", "ecosystem GTM", "docs + support loops"]}
               proofs={["Launch assets (placeholder)", "Docs (placeholder)", "Programs (placeholder)"]}
+              cta={{ label: "Read case study", href: "/obol" }}
+              ctaInline
             />
 
             <ImpactCard
-              title="Smoothly (Founder)"
-              subtitle="Tool for Ethereum stakers to pool execution-layer rewards"
+              title={
+                <img
+                  src="/smoothly/screenshots/pink.png"
+                  alt="Smoothly"
+                  className="h-10 w-48 rounded-full border border-zinc-800/60 bg-zinc-900/40 object-cover"
+                />
+              }
+              subtitle="MEV smoothing pool"
               impact={[
-                "grew from 0 to 15M TVL with guerilla marketing",
-                "distributed 150K+ in donations to solo stakers",
-                "bootstrapped + EF grant + 2 devs shipped an open-source public good",
-                "learned: if you build it, they will come",
+                "$20M TVL",
+                "open-source public good",
+                "rockstar oracle operators",
+                "routed $150k of public-goods donations into the pool",
               ]}
               proofs={[
                 "Site: https://smoothly.money",
@@ -692,6 +982,8 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
                 "GitHub org: https://github.com/Smoothly-Protocol",
                 "Coverage: https://www.poap.news/mar-19-2024/",
               ]}
+              cta={{ label: "Read case study", href: "/smoothly" }}
+              ctaInline
             />
           </div>
         </SectionBlock>
@@ -982,19 +1274,37 @@ function SectionBlock({ id, title, kicker, children, setRef }) {
   );
 }
 
-function ImpactCard({ title, subtitle, impact, proofs, open }) {
+function ImpactCard({ title, subtitle, impact, proofs, open, cta, ctaInline = false }) {
   return (
     <details open={open} className="group rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
       <summary className="cursor-pointer list-none select-none">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <div className="text-base font-semibold text-zinc-100">{title}</div>
-            <div className="mt-0.5 text-sm text-zinc-300/80">{subtitle}</div>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="min-w-0">
+            <div className="flex items-center gap-3">
+              <div className="text-base font-semibold text-zinc-100">{title}</div>
+              {cta && ctaInline ? (
+                <a
+                  className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-1 text-xs text-zinc-100 hover:bg-zinc-900/55"
+                  href={cta.href}
+                  onClick={(e) => e.stopPropagation()}
+                  onKeyDown={(e) => e.stopPropagation()}
+                >
+                  {cta.label}
+                </a>
+              ) : null}
+            </div>
+            <div className="mt-1 text-sm text-zinc-300/80">{subtitle}</div>
           </div>
-          <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/30 px-2 py-1 font-mono text-xs text-zinc-200/80">
-            <span className="group-open:hidden">expand</span>
-            <span className="hidden group-open:inline">collapse</span>
-          </div>
+          {cta && !ctaInline ? (
+            <a
+              className="w-fit rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-xs text-zinc-100 hover:bg-zinc-900/55"
+              href={cta.href}
+              onClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => e.stopPropagation()}
+            >
+              {cta.label}
+            </a>
+          ) : null}
         </div>
       </summary>
 
@@ -1007,7 +1317,7 @@ function ImpactCard({ title, subtitle, impact, proofs, open }) {
           <div className="font-mono text-xs text-zinc-400/80">proof</div>
           <ul className="mt-2 space-y-1 text-sm text-zinc-200/85">
             {proofs.map((x, index) => {
-              const match = typeof x === "string" ? x.match(/^(.*?):\s*(https?:\/\/\S+)/) : null;
+              const match = typeof x === "string" ? x.match(/^(.*?):\s*(\/\S+|https?:\/\/\S+)/) : null;
               const label = match?.[1]?.trim();
               const href = match?.[2];
               return (
@@ -1016,8 +1326,8 @@ function ImpactCard({ title, subtitle, impact, proofs, open }) {
                     <a
                       className="underline decoration-zinc-500/50 underline-offset-4 hover:text-zinc-100"
                       href={href}
-                      target="_blank"
-                      rel="noreferrer"
+                      target={href.startsWith("http") ? "_blank" : undefined}
+                      rel={href.startsWith("http") ? "noreferrer" : undefined}
                     >
                       {label || href}
                     </a>
