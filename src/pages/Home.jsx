@@ -19,9 +19,7 @@ const SECTIONS = [
   { key: "a", id: "about", label: "About" },
   { key: "h", id: "journey", label: "How I Got Here" },
   { key: "w", id: "work", label: "Work" },
-  { key: "r", id: "writing", label: "Writing" },
   { key: "t", id: "talks", label: "Talks" },
-  { key: "p", id: "projects", label: "Projects" },
   { key: "c", id: "contact", label: "Contact" },
 ];
 
@@ -41,9 +39,7 @@ export default function Home() {
     about: null,
     journey: null,
     work: null,
-    writing: null,
     talks: null,
-    projects: null,
     contact: null,
   });
 
@@ -519,19 +515,6 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
           </div>
         </SectionBlock>
 
-        <SectionBlock id="writing" title="Writing" kicker="ideas" setRef={(el) => (refs.current.writing = el)}>
-          <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
-            <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
-{`┌───────────────────────────────────────────────────────────────┐
-│ x402: writing pool empty                                      │
-│ deposit ideas to initialize                                   │
-│                                                               │
-│ status: empty block                                           │
-└───────────────────────────────────────────────────────────────┘`}
-            </pre>
-          </div>
-        </SectionBlock>
-
         <SectionBlock id="talks" title="Talks" kicker="signal" setRef={(el) => (refs.current.talks = el)}>
           <div className="grid items-stretch gap-3 md:grid-cols-[1.1fr_0.9fr]">
             <div className="space-y-3">
@@ -578,55 +561,6 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
                 Devconnect 2025.
               </figcaption>
             </figure>
-          </div>
-        </SectionBlock>
-
-        <SectionBlock id="projects" title="Projects" kicker="threads" setRef={(el) => (refs.current.projects = el)}>
-          <div className="space-y-3">
-            <p className="text-sm leading-6 text-zinc-200/85">
-              A small selection — the stuff I’m most proud of, or currently obsessed with.
-            </p>
-          </div>
-
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
-              <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
-{`┌─ Shipping ────────────────────────────────────────────────────┐
-│ Obol TVL Growth  →  https://defillama.com/protocol/obol         │
-│ Smoothly Growth  →  https://dune.com/0xRob/smoothly             │
-│ GTM: Obol Stack  →  https://github.com/ObolNetwork/obol-stack   │
-└───────────────────────────────────────────────────────────────┘`}
-              </pre>
-              <div className="mt-3 flex flex-wrap gap-2 text-xs text-zinc-300/80">
-                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://defillama.com/protocol/obol" target="_blank" rel="noreferrer">Obol TVL</a>
-                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://dune.com/0xRob/smoothly" target="_blank" rel="noreferrer">Smoothly Growth</a>
-                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://github.com/ObolNetwork/obol-stack" target="_blank" rel="noreferrer">Obol Stack</a>
-              </div>
-            </div>
-            <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
-              <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
-{`┌─ Public Goods ────────────────────────────────────────────────┐
-│ ENS + IPFS personal site (this one)                            │
-│ Solo staking incentives → https://docs.smoothly.money/         │
-│ POAP recap             → https://www.poap.news/mar-19-2024/     │
-└───────────────────────────────────────────────────────────────┘`}
-              </pre>
-              <div className="mt-3 flex flex-wrap gap-2 text-xs text-zinc-300/80">
-                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://docs.smoothly.money/" target="_blank" rel="noreferrer">Solo staking incentives</a>
-                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://www.poap.news/mar-19-2024/" target="_blank" rel="noreferrer">POAP recap</a>
-              </div>
-            </div>
-            <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
-              <pre className="whitespace-pre-wrap font-mono text-[12px] leading-5 text-zinc-200/80">
-{`┌─ Experiments ─────────────────────────────────────────────────┐
-│ ASCII UI + keyboard-first interactions                          │
-│ https://github.com/ksale001/braille-buddy                        │
-└───────────────────────────────────────────────────────────────┘`}
-              </pre>
-              <div className="mt-3 flex flex-wrap gap-2 text-xs text-zinc-300/80">
-                <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://github.com/ksale001/braille-buddy" target="_blank" rel="noreferrer">braille-buddy</a>
-              </div>
-            </div>
           </div>
         </SectionBlock>
 
