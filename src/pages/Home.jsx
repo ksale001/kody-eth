@@ -484,7 +484,7 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
                 "Blog: https://blog.obol.org",
                 "Obol Stack: https://github.com/ObolNetwork/obol-stack",
               ]}
-              cta={{ label: "Read case study", href: "/obol" }}
+              cta={{ label: "Read case study", href: "#/obol" }}
               ctaInline
             />
 
@@ -509,7 +509,7 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
                 "GitHub org: https://github.com/Smoothly-Protocol",
                 "Coverage: https://www.poap.news/mar-19-2024/",
               ]}
-              cta={{ label: "Read case study", href: "/smoothly" }}
+              cta={{ label: "Read case study", href: "#/smoothly" }}
               ctaInline
             />
           </div>
