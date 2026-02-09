@@ -336,7 +336,7 @@
           drawText(grid, x, startY + i, line);
         });
       } else if (state === STATE.GAMEOVER) {
-        const lines = [loseOnce ? "YOU LOSE" : "YOU WIN", "CLICK TO RESTART"];
+        const lines = [loseOnce ? "YOU GOT REKT" : "YOU WIN", "CLICK TO RESTART"];
         const startY = Math.floor(dims.rows / 2) - 1;
         lines.forEach((line, i) => {
           const x = Math.floor((dims.cols - line.length) / 2);
