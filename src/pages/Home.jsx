@@ -438,19 +438,19 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
         <SectionBlock id="journey" title="How I Got Here" kicker="origin" setRef={(el) => (refs.current.journey = el)}>
           <div className="space-y-4">
             <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
-              <div className="space-y-3 text-sm leading-6 text-zinc-200/85">
+              <div className="space-y-5 text-justify text-sm leading-7 text-zinc-200/85">
                 <p>{HOW_I_GOT_HERE_PARAS[0]}</p>
                 <details className="group rounded-2xl border border-zinc-800/60 bg-zinc-950/40 p-3">
                   <summary className="cursor-pointer list-none select-none">
                     <div className="flex items-center justify-between gap-3">
-                      <div className="font-mono text-xs text-zinc-400/80">context</div>
                       <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/30 px-2 py-1 font-mono text-xs text-zinc-200/80">
                         <span className="group-open:hidden">read more</span>
                         <span className="hidden group-open:inline">collapse</span>
                       </div>
+                      <div className="font-mono text-xs text-zinc-400/80">context</div>
                     </div>
                   </summary>
-                  <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
+                  <div className="mt-4 space-y-5 text-justify text-sm leading-7 text-zinc-200/85">
                     {HOW_I_GOT_HERE_PARAS.slice(1).map((para, index) => (
                       <p key={`journey-${index}`}>{para}</p>
                     ))}
@@ -594,7 +594,7 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
         <SectionBlock id="contact" title="Contact" kicker="reach" setRef={(el) => (refs.current.contact = el)}>
           <div className="space-y-3">
             <p className="text-sm leading-6 text-zinc-200/85">
-              Always happy to chat with like minded people. HMU if you want to talk Ethereum validator infra.
+              Always happy to chat and offer support to anyone building in the ecosystem. Paying it forward.
             </p>
             <div className="grid gap-3">
               <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
@@ -609,7 +609,11 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
                     </button>
                   </div>
 
-                  <div className="mt-2 font-mono text-sm">{email}</div>
+                  <div className="mt-2 font-mono text-sm">
+                    <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href={`mailto:${email}`}>
+                      {email}
+                    </a>
+                  </div>
 
                   <div className="mt-4 flex flex-wrap gap-2">
                     <a className="rounded-2xl border border-zinc-800/70 bg-zinc-900/35 px-3 py-2 text-sm hover:bg-zinc-900/55" href="https://farcaster.xyz/kody.eth" target="_blank" rel="noreferrer">Farcaster</a>
@@ -618,7 +622,15 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
                   </div>
 
                   <div className="mt-4 text-xs text-zinc-300/70">
-                    Telegram: <span className="font-mono">@kodysale</span>
+                    Telegram:{" "}
+                    <a
+                      className="font-mono underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100"
+                      href="https://t.me/kodysale"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      @kodysale
+                    </a>
                   </div>
 
                   <div className="mt-3 text-xs text-zinc-300/70">
@@ -823,7 +835,7 @@ const HOW_I_GOT_HERE_PARAS = [
     . Bitcoin was (and is) an incredible invention, and I’ll always have a special place in my heart for it. But today, it’s largely a store of value, plain and simple.
   </>,
   "I found Ethereum in 2017 during the ICO boom, and that was my latest *aha* moment. Ethereum was more than just money, it was home to a programming language, smart contracts, art, ICOs and tokens. It was a net new ecosystem, one that anyone could connect to from their computer. I’m convinced we’ll look back on this era and realize how much the world changed because of it.",
-  "On the builder front, I stayed mostly sidelined until the beacon chain launch. Proof of Stake was a paradigm shift. The design space was suddenly wide open. LSDs (which eventually became “LSTs” for whatever reason 😉) started to take off. Decentralized staking pools like Rocket Pool gained traction. Staking just grabbed my mindshare. That obsession led me to a simple question: how can solo stakers remain competitive when staking matures? My answer at the time (although slightly naive) was to pool together MEV rewards and create new incentives through public goods funding.",
+  "On the builder front, I stayed mostly sidelined until the beacon chain launch. Proof of Stake was a paradigm shift. The design space was suddenly wide open. LSDs (better name than LSTs) started to take off. Decentralized staking pools like Rocket Pool gained traction. Staking just grabbed my mindshare. That obsession led me to a simple question: how can solo stakers remain competitive when staking matures? My answer at the time (although slightly naive) was to pool together MEV rewards and create new incentives through public goods funding.",
   "The EF was supportive of this effort and helped fund R&D. Decentralization was sexy back then and the solo staking community was strong (likely because we accounted for a large share of the actual independent node operators). I put the product on paper, found a rockstar full stack developer, and partnered with Anthony Sassano, EthStaker, Aestus Relay, and Yorrick (king of eth-docker) to help run the decentralized infrastructure. We launched smoothly.money as an open-source public good which grew to ~$20M in TVL and outperformed on APY thanks to the donations that poured in from the ecosystem!",
   "Somewhere along the way, “incentivize solo staking” became a meme.",
   "Around that time, I saw Obol publish an initiative called “1% for decentralization,” where a portion of rewards from stake run on Obol Distributed Validators gets redistributed back to the community to fund projects that strengthen Ethereum’s decentralization. That hit me hard. While building Smoothly, that kind of funding would have been massively valuable. I joined Obol shortly after.",

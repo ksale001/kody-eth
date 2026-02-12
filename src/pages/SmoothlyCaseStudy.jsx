@@ -20,21 +20,21 @@ export default function SmoothlyCaseStudy() {
             <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-300/80">
               <span className="rounded-full border border-zinc-800/70 px-3 py-1 font-mono">Smoothly</span>
               <span className="rounded-full border border-zinc-800/70 px-3 py-1 font-mono">Case study</span>
-              <span className="rounded-full border border-zinc-800/70 px-3 py-1 font-mono">2022 → 2024</span>
+              <span className="rounded-full border border-zinc-800/70 px-3 py-1 font-mono">2022 → 2026</span>
             </div>
             <h1 className="text-2xl font-semibold text-zinc-100">Smoothly: A Case Study</h1>
             <p className="text-sm leading-6 text-zinc-200/85">
-              Smoothly is a solo‑stakers smoothing pool: point your validators fee recipient to the pool contract,
+              Smoothly is an MEV smoothing pool: point your validator fee recipient to the pool contract,
               register, and claim a share of pooled tips and MEV every 21 days.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/40 p-4">
                 <div className="font-mono text-xs text-zinc-400/80">role</div>
-                <div className="mt-2 text-sm text-zinc-200/90">Founder — product, protocol design, positioning, GTM</div>
+                <div className="mt-2 text-sm text-zinc-200/90">Founder — product owner, protocol design, positioning, GTM</div>
               </div>
               <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/40 p-4">
                 <div className="font-mono text-xs text-zinc-400/80">team</div>
-                <div className="mt-2 text-sm text-zinc-200/90">1 full‑stack engineer, 1 graphic designer</div>
+                <div className="mt-2 text-sm text-zinc-200/90">1 full‑stack engineer, 1 graphic designer, and me</div>
               </div>
             </div>
             <div className="flex flex-wrap gap-2 text-xs text-zinc-300/80">
@@ -50,18 +50,18 @@ export default function SmoothlyCaseStudy() {
           <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
             <div className="font-mono text-xs text-zinc-400/80">who it’s for</div>
             <div className="mt-2 text-sm text-zinc-200/90">
-              Home stakers and independent operators who want more consistent execution‑layer rewards without giving up custody.
+              Home stakers and independent operators who want consistent execution‑layer rewards without using a LST.
             </div>
           </div>
           <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
             <div className="font-mono text-xs text-zinc-400/80">outcome</div>
             <div className="mt-2 text-sm text-zinc-200/90">
-              Smoothed execution‑layer rewards using a trust‑minimized oracle network, a bond/penalty system, and a not‑for‑profit fee model.
+              Returned 3x the expected execution‑layer rewards to subscribers using a trust‑minimized oracle network, a bond/penalty system, and published the protocol as an open source public good.
             </div>
           </div>
           <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-4 backdrop-blur">
             <div className="font-mono text-xs text-zinc-400/80">topline</div>
-            <div className="mt-2 text-sm text-zinc-200/90">Peak TVL ~ $20M · Public‑goods donations ~ $150k</div>
+            <div className="mt-2 text-sm text-zinc-200/90">Peak TVL ~ $20M · Donations to stakers ~ $150k</div>
           </div>
         </section>
 
@@ -70,9 +70,9 @@ export default function SmoothlyCaseStudy() {
             <div className="font-mono text-xs text-zinc-400/80">context</div>
             <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
               <p>
-                In 2021–2022, MEV and tips were extremely high, and the Merge was on the horizon. Post‑merge, stakers
+                In 2021–2022, MEV and tips were extremely high, and the Merge was around the corner. Post‑merge, stakers
                 would receive execution‑layer rewards. Solo stakers only expected a handful of block proposals per year,
-                and the odds of any one being a “lottery block” with massive MEV were even lower.
+                and the odds of any one being a “lottery block” with massive MEV were very low.
               </p>
               <p>
                 I wanted a way to access the “average” block reward and believed pooling execution‑layer rewards would
@@ -80,8 +80,8 @@ export default function SmoothlyCaseStudy() {
               </p>
               <p>
                 It was also obvious solo staking would come under pressure from large providers who could smooth rewards
-                by default. Beyond smoothing, this was about keeping solo staking competitive and incentivizing solo stakers
-                using Ethereum’s public‑goods ecosystem to reinforce decentralization.
+                in their protocol. This was about keeping solo staking competitive and incentivizing solo stakers
+                using Ethereum’s public‑goods funding mechanisms to push back against centralization.
               </p>
             </div>
           </div>
@@ -121,16 +121,16 @@ export default function SmoothlyCaseStudy() {
             <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
               <div className="font-mono text-xs text-zinc-400/80">the problem</div>
               <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
-                <li>Execution‑layer rewards (MEV + tips) are spiky and unpredictable for solo stakers.</li>
-                <li>Large staking providers can smooth rewards across big validator sets. Solo stakers can’t.</li>
-                <li>That creates a structural disadvantage and lower APY even for excellent operators.</li>
+                <li>Execution‑layer rewards (MEV + tips) are volatile and random for solo stakers.</li>
+                <li>Large staking providers can smooth rewards across their own validators. Solo stakers can’t.</li>
+                <li>That creates a structural disadvantage and lower APY even for the best performing operators.</li>
               </ul>
             </div>
             <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
               <div className="font-mono text-xs text-zinc-400/80">why it mattered</div>
               <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
-                <li>Solo staking is the long tail that keeps Ethereum decentralized.</li>
-                <li>If solo stakers become uncompetitive, staking centralizes.</li>
+                <li>Solo stakers are the long tail of operators that keep Ethereum decentralized.</li>
+                <li>If solo staking becomes uncompetitive, staking centralizes.</li>
                 <li>Incentivizing solo staking keeps independent operators in the game.</li>
               </ul>
             </div>
@@ -143,15 +143,15 @@ export default function SmoothlyCaseStudy() {
             <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
               <p><strong>Primary ICP (v1):</strong> solo / home stakers running their own validators.</p>
               <p><strong>Secondary audiences:</strong> small staking entities running hundreds of keys.</p>
-              <p><strong>Tagline:</strong> Solo stakers smoothing pool. Maximize rewards, incentivize home staking.</p>
+              <p><strong>Tagline:</strong> Maximize rewards, incentivize home staking.</p>
               <div>
                 <div className="font-mono text-xs text-zinc-400/80">key differentiators</div>
                 <ul className="mt-2 space-y-2">
                   <li>Trust‑minimized: 6 oracle operators; contract updates require ≥66% consensus.</li>
-                  <li>Not‑for‑profit public good: 1.5% fee split to cover gas; no team fee.</li>
+                  <li>Open source public good: 1.5% fee split to cover gas; Smoothly team takes no fee.</li>
                   <li>Simple: change fee recipient, register, claim every 21 days (or let it accrue).</li>
-                  <li>Security‑minded: 0.5 ETH bond per validator and penalties to deter MEV theft.</li>
-                  <li>Open source but realistic: bridge until MEV smoothing/burn is enshrined.</li>
+                  <li>Security: 0.5 ETH bond per validator and penalties to deter MEV theft.</li>
+                  <li>Realistic: protocol is built as a bridge until MEV smoothing/burn is enshrined.</li>
                 </ul>
               </div>
             </div>
@@ -160,10 +160,10 @@ export default function SmoothlyCaseStudy() {
           <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
             <div className="font-mono text-xs text-zinc-400/80">strategy</div>
             <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
-              <p><strong>The wedge:</strong> Treat MEV as the lottery. We all have to play, better odds together.</p>
-              <p><strong>GTM approach:</strong> claim rewards even when you don’t propose blocks; keep setup actionable.</p>
+              <p><strong>The wedge:</strong> MEV is like the lottery we’re all forced to play. We have better odds if we play together.</p>
+              <p><strong>GTM approach:</strong> claim rewards even when you don’t propose blocks.</p>
               <p><strong>Narrative pillars:</strong> solo stakers shouldn’t be forced gamblers; reward smoothing is a primitive;
-                decentralization must be economically competitive; open‑source public good.</p>
+                decentralization must be economically competitive.</p>
             </div>
           </div>
         </section>
@@ -177,7 +177,7 @@ export default function SmoothlyCaseStudy() {
                 awareness. I planned a modest ~5% fee to fund development.
               </p>
               <p>
-                Once it became a duopoly, I reduced the fee to <strong>1.5%</strong> (cost coverage) and repositioned
+                Once it became a duopoly, I reduced the fee to <strong>1.5%</strong> and repositioned
                 Smoothly as an <strong>open‑source public good</strong> for solo stakers.
               </p>
               <p>
@@ -187,16 +187,16 @@ export default function SmoothlyCaseStudy() {
             </div>
           </div>
           <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
-            <div className="font-mono text-xs text-zinc-400/80">trust as a strategy</div>
+            <div className="font-mono text-xs text-zinc-400/80">choose wisely</div>
             <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
               <p>
-                Oracle operator selection was a deliberate trust lever: recruit high‑signal, Ethereum‑aligned operators who
-                solo stakers already trust, and align incentives so the system is sustainable without becoming extractive.
+                Oracle operator selection was a lever I could pull to increase brand trust: recruit high‑signal, Ethereum‑aligned operators who
+                solo stakers already trust, and design incentives so the system is sustainable without becoming extractive.
               </p>
               <ul className="space-y-2">
-                <li>Bond + penalties to deter MEV theft and misconfiguration.</li>
-                <li>Oracle consensus before state updates.</li>
-                <li>Operators: The Daily Gwei, EthStaker, Aestus Relay, Yorrick (Eth‑Docker).</li>
+                <li>Bond and penalties to deter MEV theft and misconfiguration.</li>
+                <li>Oracle operators reach consensus before the state updates.</li>
+                <li>Operators: Anthony Sassano (The Daily Gwei), EthStaker, Aestus Relay, Yorrick (Eth‑Docker).</li>
               </ul>
             </div>
           </div>
@@ -214,12 +214,12 @@ export default function SmoothlyCaseStudy() {
               </div>
             </div>
             <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
-              <div className="font-mono text-xs text-zinc-400/80">tradeoffs</div>
+              <div className="font-mono text-xs text-zinc-400/80">things I'd do again</div>
               <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
-                <li>Competed on narrative and incentives vs brand awareness.</li>
-                <li>Removed ~5% dev fee to build trust; funding became a question.</li>
-                <li>Public‑goods commitment made “open‑source public good” real.</li>
-                <li>Trust‑minimized design had to stay simple for solo stakers.</li>
+                <li>Open‑source public good narrative.</li>
+                <li>Oracle operator selection as the core trust/GTM lever.</li>
+                <li>Simple claim interval.</li>
+                <li>SLIDE as the mechanism that turned incentivize‑solo‑staking into reality.</li>
               </ul>
             </div>
           </div>
@@ -245,21 +245,12 @@ export default function SmoothlyCaseStudy() {
           </figure>
         </section>
 
-        <section className="mt-6 grid gap-3 md:grid-cols-2">
+        <section className="mt-6">
           <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
-            <div className="font-mono text-xs text-zinc-400/80">do again</div>
+            <div className="font-mono text-xs text-zinc-400/80">if I had a time machine, I'd...</div>
             <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
-              <li>Open‑source public good narrative.</li>
-              <li>Oracle operator selection as the core trust/GTM lever.</li>
-              <li>Simple claim interval.</li>
-              <li>SLIDE as the mechanism that turned incentivize‑solo‑staking into reality.</li>
-            </ul>
-          </div>
-          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
-            <div className="font-mono text-xs text-zinc-400/80">change</div>
-            <ul className="mt-3 space-y-2 text-sm text-zinc-200/85">
-              <li>Lower the 0.5 ETH bond (barrier at scale).</li>
-              <li>Remove the fee entirely for cleaner alignment.</li>
+              <li>Lower the 0.5 ETH bond (it turns into a large barrier at scale).</li>
+              <li>Remove the fee entirely to ride the narrative to valhalla.</li>
             </ul>
           </div>
         </section>
@@ -292,27 +283,6 @@ export default function SmoothlyCaseStudy() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
-            <div className="font-mono text-xs text-zinc-400/80">media placeholders</div>
-            <div className="mt-3 space-y-2 text-xs text-zinc-300/80">
-              <div className="rounded-2xl border border-dashed border-zinc-800/60 bg-zinc-950/40 p-3">
-                <div className="font-mono">[screenshot]</div>
-                <div>EthStaker Discord first post</div>
-              </div>
-              <div className="rounded-2xl border border-dashed border-zinc-800/60 bg-zinc-950/40 p-3">
-                <div className="font-mono">[screenshot]</div>
-                <div>Devconnect / Ken Smith analysis slide</div>
-              </div>
-              <div className="rounded-2xl border border-dashed border-zinc-800/60 bg-zinc-950/40 p-3">
-                <div className="font-mono">[photo]</div>
-                <div>Goerli PoC dashboard + team shots</div>
-              </div>
-              <div className="rounded-2xl border border-dashed border-zinc-800/60 bg-zinc-950/40 p-3">
-                <div className="font-mono">[photo]</div>
-                <div>Dappnode collab / “duopoly era”</div>
-              </div>
-            </div>
-          </div>
         </section>
       </main>
     </div>
