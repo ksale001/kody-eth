@@ -2,3 +2,8 @@
 node_modules/
 dist/
 .env
+
+# Working/handover docs — kept locally, not published
+launch-os-writeup.md
+website-additions.md
+website_handover.md
