@@ -157,6 +157,20 @@ We ran an **Ethereum Institutional Staking Survey** to generate leads and signal
 
 ---
 
+### Act 4 — The Agentic Economy (Obol Stack, 2026)
+
+The next frontier wasn't another staking motion — it was **agentic commerce**. As autonomous agents began transacting, they needed neutral rails to move value between each other without a platform in the middle.
+
+- Over a rapid release cadence, I owned the positioning that took the Obol Stack from "staking infrastructure" into the **agentic economy** — unlocking **agentic commerce on x402** and establishing **$OBOL as money for agent-to-agent commerce**.
+- Core narrative: **"Obol is money," "powers the agentic economy," "no middlemen"** — money and settlement for agents, framed for both the crypto-native audience and the agent-builder/developer audience.
+- Shipped on a fast cadence: positioning + clarity brief per release, plus derivative content (thread + blog) for the team — increasingly drafted with **Launch OS** (see its case study).
+
+**Proof links:** [Agentic Commerce](https://blog.obol.org/agentic-commerce/) · [Obol Is Money](https://blog.obol.org/obol-is-money/)
+
+**Why it matters:** this is the same through-line as Smoothly and DVT — keep the open ecosystem competitive and credibly neutral — now applied to the agent era, where staking GTM, programmable settlement, and AI all converge. And I hold it honestly: agentic commerce is real but early. The people transacting on x402 today did the hard work themselves — spun up their own agents, funded wallets, wired up payments by hand — and that isn't how mainstream users or businesses will ever touch it. The edge isn't predicting the endpoint; it's staying close to the space, reading the signal honestly, and being ready to move the moment real PMF shows up.
+
+---
+
 ## Outcomes
 
 ### 1) Techne became a compounding operator pipeline

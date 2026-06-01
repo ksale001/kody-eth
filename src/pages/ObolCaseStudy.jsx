@@ -88,6 +88,7 @@ export default function ObolCaseStudy() {
               <li>Epoch 1 — Squad Staking: grassroots movement targeting the home operators that helped launch the beacon chain!</li>
               <li>Epoch 2 — Onchain Protocols: real TVL unlock. </li>
               <li>Epoch 3 — Institutions: the DAT era and a new offering (Cluster as a Service)</li>
+              <li>Epoch 4 — The Agentic Economy: Obol Stack rails for agent-to-agent commerce ($OBOL is money)</li>
             </ul>
           </div>
         </section>
@@ -267,6 +268,53 @@ export default function ObolCaseStudy() {
                 <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 px-3 py-2">
                   Survey results: <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://hubs.ly/Q042cBB60" target="_blank" rel="noreferrer">institutional staking survey</a>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-3 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">Epoch 4 — the agentic economy (2026)</div>
+            <div className="mt-3 space-y-3 text-sm leading-6 text-zinc-200/85">
+              <p>
+                The next frontier wasn’t another staking motion — it was <strong>agentic commerce</strong>. As autonomous
+                agents began transacting, they needed neutral rails to move value between each other without a platform in
+                the middle.
+              </p>
+              <ul className="space-y-2">
+                <li>
+                  Over a rapid release cadence, I owned the positioning that took the Obol Stack from “staking
+                  infrastructure” into the <strong>agentic economy</strong> — unlocking agentic commerce on x402 and
+                  establishing <strong>$OBOL as money for agent‑to‑agent commerce</strong>.
+                </li>
+                <li>
+                  Core narrative: <strong>“Obol is money,” “powers the agentic economy,” “no middlemen”</strong> — money and
+                  settlement for agents, framed for both the crypto‑native and agent‑builder/developer audiences.
+                </li>
+                <li>
+                  Shipped on a fast cadence: positioning + clarity brief per release, plus derivative content (thread +
+                  blog) — increasingly drafted with <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="#/launch-os">Launch OS</a>.
+                </li>
+              </ul>
+              <p>
+                <strong>Why it matters:</strong> same through‑line as Smoothly and DVT — keep the open ecosystem
+                competitive and credibly neutral — now applied to the agent era. And I hold it honestly: agentic commerce
+                is real but early. The people transacting on x402 today did the hard work themselves. The edge isn’t
+                predicting the endpoint; it’s staying close, reading the signal honestly, and being ready to move the
+                moment real PMF shows up.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-zinc-800/70 bg-zinc-950/45 p-5 backdrop-blur">
+            <div className="font-mono text-xs text-zinc-400/80">Epoch 4 proof</div>
+            <div className="mt-3 space-y-2 text-xs text-zinc-300/80">
+              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 px-3 py-2">
+                Agentic Commerce: <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://blog.obol.org/agentic-commerce/" target="_blank" rel="noreferrer">blog.obol.org/agentic-commerce</a>
+              </div>
+              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-950/40 px-3 py-2">
+                Obol Is Money: <a className="underline decoration-zinc-500/60 underline-offset-4 hover:text-zinc-100" href="https://blog.obol.org/obol-is-money/" target="_blank" rel="noreferrer">blog.obol.org/obol-is-money</a>
               </div>
             </div>
           </div>

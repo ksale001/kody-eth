@@ -478,6 +478,7 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
                 "keeping protocols decentralized",
                 "scaling Ethereum DA",
                 "nerdsniping institutions since 2025",
+                "$OBOL is money for the agentic economy (x402)",
               ]}
               proofs={[
                 "Website: https://obol.org",
@@ -510,6 +511,26 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
                 "Coverage: https://www.poap.news/mar-19-2024/",
               ]}
               cta={{ label: "Read case study", href: "#/smoothly" }}
+              ctaInline
+            />
+
+            <ImpactCard
+              title="Launch OS (work in progress)"
+              subtitle="AI agents that run go-to-market · running and actively iterating"
+              impact={[
+                "six-agent system",
+                "10+ launches + a multi-stage deal funnel tracked end-to-end",
+                "daily team brief (runs twice a day)",
+                "auto-flags stale workstreams",
+                "on-voice drafting",
+                "built solo",
+              ]}
+              proofs={[
+                "Stack: TypeScript/Node · SQLite · Claude Code CLI",
+                "800+ automated tests · local-only, no API tokens",
+                "Full walkthrough in the case study",
+              ]}
+              cta={{ label: "Read case study", href: "#/launch-os" }}
               ctaInline
             />
           </div>
@@ -569,17 +590,21 @@ teaching, or building; raising kids who’ll figure out why the answer is 42.
             <p className="text-sm leading-6 text-zinc-200/85">
               Favorite places to track what is happening across the Ethereum ecosystem.
             </p>
+            <p className="text-sm leading-6 text-zinc-200/85">
+              <strong>8004scan</strong> (ERC-8004 agent registry) and <strong>x402scan</strong> (x402 payments) are the
+              agentic-commerce primitives behind the Obol Stack work — rails I’m positioning on, not just signals I track.
+            </p>
             <ListPanel
               columns={3}
               items={[
                 { title: "Payload data", meta: "payload.de", href: "https://payload.de/data/" },
                 { title: "KiwiStand news", meta: "news.kiwistand.com", href: "https://news.kiwistand.com/" },
                 { title: "EthPandaOps live", meta: "lab.ethpandaops.io", href: "https://lab.ethpandaops.io/ethereum/live" },
-                { title: "8004scan", meta: "8004scan.io", href: "https://www.8004scan.io/" },
+                { title: "8004scan", meta: "ERC-8004 agent registry · 8004scan.io", href: "https://www.8004scan.io/" },
                 { title: "Lean roadmap", meta: "leanroadmap.org", href: "https://leanroadmap.org/" },
                 { title: "ETH proofs", meta: "ethproofs.org", href: "https://ethproofs.org/" },
                 { title: "Rollup.wtf", meta: "rollup.wtf", href: "https://rollup.wtf/" },
-                { title: "x402scan", meta: "x402scan.com", href: "https://www.x402scan.com/" },
+                { title: "x402scan", meta: "x402 payments · x402scan.com", href: "https://www.x402scan.com/" },
                 { title: "Raises (DeFiLlama)", meta: "defillama.com", href: "https://defillama.com/raises" },
                 { title: "Pectrified mainnet", meta: "pectrified.com", href: "https://pectrified.com/mainnet" },
                 { title: "EthVal", meta: "ethval.com", href: "https://ethval.com/" },
